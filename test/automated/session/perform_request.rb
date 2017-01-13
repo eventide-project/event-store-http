@@ -4,11 +4,9 @@ context "Session Performs HTTP Request" do
   session = EventStore::HTTP::Session.new
   session.connect = EventStore::HTTP::Connect.build
 
-  response = session.yield do |connection|
-    request = Controls::NetHTTP::Request.example
+  request = Controls::NetHTTP::Request.example
 
-    connection.request request
-  end
+  response = session.request request
 
   test "Response is returned" do
     assert Net::HTTPResponse === response

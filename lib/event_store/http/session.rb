@@ -18,8 +18,8 @@ module EventStore
         instance
       end
 
-      def yield(&block)
-        block.(connection)
+      def request(request)
+        connection.request request 
       end
 
       def connection
