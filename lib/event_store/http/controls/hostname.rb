@@ -6,9 +6,21 @@ module EventStore
           Available.example
         end
 
+        module Other
+          def self.example
+            Available::Other.example
+          end
+        end
+
         module Available
           def self.example
             'eventstore.local'
+          end
+
+          module Other
+            def self.example
+              'alternate.eventstore.local'
+            end
           end
         end
 

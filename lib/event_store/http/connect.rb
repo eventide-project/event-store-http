@@ -21,8 +21,16 @@ module EventStore
         end
       end
 
-      def self.build(settings=nil, **arguments)
-        Factory.(settings, **arguments)
+      def self.build(settings=nil, namespace: nil, type: nil)
+        Factory.(settings, namespace: namespace, type: type)
+      end
+
+      def self.configure(receiver, settings=nil, attr_name: nil, **arguments)
+        attr_name ||= :connect
+
+        instance = build settings, **arguments
+        receiver.public_send "#{attr_name}=", instance
+        instance
       end
 
       module Call

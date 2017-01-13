@@ -29,6 +29,7 @@ module EventStore
 
               ERB.new(<<~ERB, 0, '>').result binding
               <%= IPAddress::Available.example %> <%= Hostname::Available.example %>\n
+              <%= IPAddress::Available.example %> <%= Hostname::Available::Other.example %>\n
               <%= IPAddress::Unavailable.example %> <%= Hostname::Unavailable.example %>\n
 
               <% (1..Controls::Cluster::Size.example).each do |member_index| %>

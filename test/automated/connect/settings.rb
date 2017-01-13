@@ -22,4 +22,18 @@ context "Settings" do
       assert connect.instance_of?(Controls::ConnectionType.connect_class)
     end
   end
+
+  context "Namespace" do
+    settings = Settings.build({
+      :some_namespace => {
+        :host => Controls::Hostname::Other.example
+      }
+    })
+
+    connect = EventStore::HTTP::Connect.build settings, namespace: :some_namespace
+
+    test "Settings from namespace are applied" do
+      assert connect.host == Controls::Hostname::Other.example
+    end
+  end
 end

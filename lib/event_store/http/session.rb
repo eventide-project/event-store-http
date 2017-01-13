@@ -7,8 +7,6 @@ module EventStore
 
       dependency :connect, Connect
 
-      setting :host
-
       attr_writer :connection
 
       def self.build(settings=nil, namespace: nil)
