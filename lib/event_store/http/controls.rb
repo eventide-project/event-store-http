@@ -1,1 +1,1 @@
-module EventStore::HTTP; Controls = Module.new; end
+require 'event_store/http/controls/request'
