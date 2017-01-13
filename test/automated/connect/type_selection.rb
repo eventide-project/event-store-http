@@ -5,8 +5,7 @@ context "Connection Type Is Selected" do
     connect = EventStore::HTTP::Connect.build
 
     test "Leader connection type is selected" do
-      # XXX - add test after leader is implemented
-      #assert connect.instance_of?(EventStore::HTTP::Connect::Leader)
+      assert connect.instance_of?(EventStore::HTTP::Connect::Leader)
     end
   end
 
@@ -20,8 +19,7 @@ context "Connection Type Is Selected" do
 
   context "Unknown type" do
     test "Error is raised" do
-      # XXX - leader is used here while types are being resolved
-      assert proc { EventStore::HTTP::Connect.build type: 'leader' } do
+      assert proc { EventStore::HTTP::Connect.build type: 'unknown' } do
         raises_error? EventStore::HTTP::Connect::Factory::UnknownType
       end
     end

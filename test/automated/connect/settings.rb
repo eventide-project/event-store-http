@@ -2,7 +2,7 @@ require_relative '../automated_init'
 
 context "Settings" do
   context "Port" do
-    settings = Settings.build({ :port => 1111 })
+    settings = Settings.build({ :port => 1111, :type => :any })
 
     connect = EventStore::HTTP::Connect.build settings
 

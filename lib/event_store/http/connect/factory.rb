@@ -58,7 +58,8 @@ module EventStore
 
         def self.types
           @types ||= {
-            :any => Any
+            :any => Any,
+            :leader => Leader
           }
         end
 

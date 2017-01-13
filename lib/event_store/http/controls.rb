@@ -10,5 +10,6 @@ require 'event_store/http/controls/ip_address/cluster'
 require 'event_store/http/controls/port'
 
 require 'event_store/http/controls/connection_type'
-require 'event_store/http/controls/cluster'
+require 'event_store/http/controls/cluster/size'
+require 'event_store/http/controls/cluster/current_members'
 require 'event_store/http/controls/request'

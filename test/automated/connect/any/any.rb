@@ -7,26 +7,18 @@ context "Any Type Connect" do
   connect.host = host
 
   context "Connection is initialized" do
-    raw_connection = connect.()
+    connection = connect.()
 
     test "Net::HTTP connection is returned" do
-      assert raw_connection.instance_of?(Net::HTTP)
+      assert connection.instance_of?(Net::HTTP)
     end
 
     test "Host setting is used as endpoint address" do
-      assert raw_connection.address == host
+      assert connection.address == host
     end
 
-    test "Port setting is used" do
-      assert raw_connection.port == Controls::Port.example
-    end
-
-    context "Connection is started" do
-      raw_connection.start
-
-      test "Connection is active" do
-        assert raw_connection.active?
-      end
+    test "Connection is not yet active" do
+      refute connection.active?
     end
   end
 end

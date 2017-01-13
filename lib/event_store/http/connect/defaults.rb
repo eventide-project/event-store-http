@@ -7,7 +7,7 @@ module EventStore
         end
 
         def self.type
-          :any
+          :leader
         end
       end
     end

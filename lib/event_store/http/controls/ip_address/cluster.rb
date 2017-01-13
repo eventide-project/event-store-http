@@ -17,6 +17,20 @@ module EventStore
             "127.0.#{third_octet}.#{member_index}"
           end
 
+          module Leader
+            def self.example
+              leader_ip_address, * = Controls::Cluster::CurrentMembers.get
+              leader_ip_address
+            end
+          end
+
+          module Follower
+            def self.example
+              _, follower_ip_address, * = Controls::Cluster::CurrentMembers.get
+              leader_ip_address
+            end
+          end
+
           module Available
             def self.example(member_index=nil)
               Cluster.get '111', member_index: member_index
