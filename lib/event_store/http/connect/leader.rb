@@ -9,13 +9,8 @@ module EventStore
 
           # XXX sham implementation
           net_http.start do
-            socket = net_http.instance_variable_get(:@socket).io
-            remote_address = socket.remote_address
-            host = "#{remote_address.ip_address}:#{remote_address.ip_port}"
-
             request = Net::HTTP::Get.new '/info'
             request['Accept'] = 'application/json'
-            request['Host'] = host
 
             http_response = net_http.request request
 
@@ -26,7 +21,6 @@ module EventStore
             request = Net::HTTP::Get.new '/gossip'
 
             request['Accept'] = 'application/json'
-            request['Host'] = host
 
             http_response = net_http.request request
 

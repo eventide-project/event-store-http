@@ -10,6 +10,10 @@ context "Establishing Connection" do
     assert connection.address == host
   end
 
+  test "Net::HTTP extensions are applied" do
+    assert connection.is_a?(EventStore::HTTP::NetHTTP::Extensions)
+  end
+
   context "Connection is established" do
     connection.start
 

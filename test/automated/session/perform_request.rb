@@ -5,7 +5,7 @@ context "Session Performs HTTP Request" do
   session.connect = EventStore::HTTP::Connect.build
 
   response = session.yield do |connection|
-    request = Net::HTTP::Get.new '/info'
+    request = Controls::NetHTTP::Request.example
 
     connection.request request
   end

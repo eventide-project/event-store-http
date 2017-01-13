@@ -57,6 +57,8 @@ module EventStore
 
         logger.trace { "Net::HTTP connection built (IPAddress: #{ip_address}, Port: #{port})" }
 
+        net_http.extend NetHTTP::Extensions
+
         net_http
       end
 

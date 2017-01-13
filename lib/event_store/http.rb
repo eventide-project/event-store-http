@@ -7,6 +7,8 @@ require 'virtual'; Virtual.activate
 require 'event_store/http/log'
 require 'event_store/http/settings'
 
+require 'event_store/http/net_http/extensions'
+
 require 'event_store/http/connect'
 require 'event_store/http/connect/any'
 require 'event_store/http/connect/defaults'
