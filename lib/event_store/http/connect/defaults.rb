@@ -5,6 +5,10 @@ module EventStore
         def self.port
           2113
         end
+
+        def self.type
+          :any
+        end
       end
     end
   end

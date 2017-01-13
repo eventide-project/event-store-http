@@ -58,17 +58,11 @@ module EventStore
 
         def self.types
           @types ||= {
-            :raw => Raw
+            :any => Any
           }
         end
 
         UnknownType = Class.new StandardError
-
-        module Defaults
-          def self.type
-            :raw
-          end
-        end
       end
     end
   end

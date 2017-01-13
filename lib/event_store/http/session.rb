@@ -5,7 +5,7 @@ module EventStore
 
       configure :session
 
-      dependency :connect #, Connect
+      dependency :connect, Connect
 
       setting :host
 
