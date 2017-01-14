@@ -1,11 +1,11 @@
 module EventStore
   module HTTP
     module Endpoints
-      module Info
+      module Gossip
         class Get
           include Log::Dependency
 
-          configure :get_info_endpoint
+          configure :get_gossip_endpoint
 
           dependency :connection, Net::HTTP
 
@@ -21,21 +21,19 @@ module EventStore
           end
 
           def call
-            logger.trace { "GET info endpoint" }
+            logger.trace { "GET gossip endpoint" }
 
-            request = Net::HTTP::Get.new uri_path
-
-            http_response = connection.request request
+            http_response = connection.get uri_path
 
             response = Transform::Read.(http_response.body, :json, Response)
 
-            logger.debug { "GET info done (#{response.digest})" }
+            logger.debug { "GET gossip endpoint done (LeaderIPAddress: #{response.leader.external_http_ip}, FollowerCount: #{response.followers.count})" }
 
-            response
+            return response
           end
 
           def uri_path
-            '/info'
+            '/gossip'
           end
         end
       end
