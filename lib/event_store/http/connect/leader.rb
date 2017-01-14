@@ -7,32 +7,15 @@ module EventStore
         def call
           net_http = raw host
 
-          # XXX sham implementation
-          net_http.start do
-            request = Net::HTTP::Get.new '/info'
-            request['Accept'] = 'application/json'
+          member_info = Endpoints::Info::Get.(net_http)
 
-            http_response = net_http.request request
+          return net_http if member_info.leader?
 
-            response = JSON.parse http_response.body
+          cluster_status = Endpoints::Gossip::Get.(net_http)
 
-            break if response['state'] == 'master'
+          leader_ip_address = cluster_status.leader.external_http_ip
 
-            request = Net::HTTP::Get.new '/gossip'
-
-            request['Accept'] = 'application/json'
-
-            http_response = net_http.request request
-
-            response = JSON.parse http_response.body
-
-            leader_ip_address = response['members'].select { |member| member['state'] == 'Master' }[0]['externalHttpIp']
-
-            net_http = raw leader_ip_address
-          end
-          # /XXX sham implementation
-
-          net_http
+          raw leader_ip_address
         end
       end
     end
