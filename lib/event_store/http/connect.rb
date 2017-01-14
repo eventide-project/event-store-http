@@ -25,12 +25,25 @@ module EventStore
         Factory.(settings, namespace: namespace, type: type)
       end
 
+      def self.call(settings=nil, **arguments)
+        instance = build settings, **arguments
+        instance.()
+      end
+
       def self.configure(receiver, settings=nil, attr_name: nil, **arguments)
         attr_name ||= :connect
 
         instance = build settings, **arguments
         receiver.public_send "#{attr_name}=", instance
         instance
+      end
+
+      def self.configure_connection(receiver, settings=nil, connection: nil, attr_name: nil, **arguments)
+        attr_name ||= :connection
+
+        connection ||= self.(settings, **arguments)
+        receiver.public_send "#{attr_name}=", connection
+        connection
       end
 
       module Call

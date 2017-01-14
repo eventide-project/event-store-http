@@ -2,11 +2,11 @@ module EventStore
   module HTTP
     module Controls
       module NetHTTP
-        def self.example
-          hostname = Hostname.example
+        def self.example(host: nil)
+          host ||= Hostname.example
           port = Port.example
 
-          Net::HTTP.new hostname, port
+          Net::HTTP.new host, port
         end
       end
     end
