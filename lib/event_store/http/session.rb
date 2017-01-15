@@ -6,6 +6,7 @@ module EventStore
       configure :session
 
       dependency :connect, Connect
+      dependency :data_logger, Log::Data
       dependency :retry, Retry
 
       attr_writer :net_http
@@ -17,10 +18,15 @@ module EventStore
         instance = new
         Connect.configure instance, settings, namespace: namespace
         Retry.configure instance, settings, namespace: namespace
+        Log::Data.configure instance, self, attr_name: :data_logger
         instance
       end
 
       def request(request)
+        logger.trace { "Issuing request (#{LogText.request request})" }
+        data_logger.trace { "Headers: #{LogText.header_data request}" }
+        data_logger.trace { "Request data: #{LogText.body_data request}" }
+
         self.retry.() do |_retry|
           begin
             response = net_http.request request
@@ -33,8 +39,12 @@ module EventStore
             _retry.next error
           end
 
+          logger.debug { "Received response (#{LogText.request request, response})" }
+          data_logger.trace { "Headers: #{LogText.header_data response}" }
+          data_logger.trace { "Response data: #{LogText.body_data response}" }
+
           if Net::HTTPServerError === response
-            logger.warn "Server responded with 5xx status code"
+            logger.warn { "Server error (#{LogText.request request, response})" }
             _retry.next
           end
 
