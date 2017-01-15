@@ -11,7 +11,7 @@ module EventStore
 
           def self.build(connection=nil)
             instance = new
-            Connect.configure_connection instance, connection: connection
+            Connect::Any.configure_connection instance, connection: connection
             instance
           end
 

@@ -6,6 +6,8 @@ module EventStore
           include Log::Dependency
           prepend Call
 
+          configure :connect
+
           setting :host
           setting :port
 
@@ -18,32 +20,8 @@ module EventStore
           end
 
           extend Build
+          extend ClassCall
         end
-      end
-
-      def self.build(settings=nil, namespace: nil, type: nil)
-        Factory.(settings, namespace: namespace, type: type)
-      end
-
-      def self.call(settings=nil, **arguments)
-        instance = build settings, **arguments
-        instance.()
-      end
-
-      def self.configure(receiver, settings=nil, attr_name: nil, **arguments)
-        attr_name ||= :connect
-
-        instance = build settings, **arguments
-        receiver.public_send "#{attr_name}=", instance
-        instance
-      end
-
-      def self.configure_connection(receiver, settings=nil, connection: nil, attr_name: nil, **arguments)
-        attr_name ||= :connection
-
-        connection ||= self.(settings, **arguments)
-        receiver.public_send "#{attr_name}=", connection
-        connection
       end
 
       module Call
@@ -84,6 +62,19 @@ module EventStore
           settings.set instance, namespace
           instance.configure
           instance
+        end
+      end
+
+      module ClassCall
+        def call(ip_address=nil, settings: nil, namespace: nil)
+          instance = build settings, namespace: namespace
+          instance.(ip_address)
+        end
+      end
+
+      module Defaults
+        def self.port
+          2113
         end
       end
     end

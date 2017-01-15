@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Connect, Timeouts" do
-  connect = EventStore::HTTP::Connect.build
+  connect = EventStore::HTTP::Connect::Any.build
 
   context "Keep alive timeout" do
     context "Setting is not specified" do

@@ -35,11 +35,10 @@ module EventStore
 
           settings.set instance, namespace
 
-          Connect.configure instance, settings, namespace: namespace
           Retry.configure instance, settings, namespace: namespace
           Log::Data.configure instance, Session, attr_name: :data_logger
 
-          instance.configure
+          instance.configure settings, namespace
 
           logger.debug { "Session constructed (Type: #{type.inspect}, Class: #{instance.class})" }
 

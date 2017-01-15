@@ -5,8 +5,6 @@ module EventStore
         cls.class_exec do
           include Log::Dependency
 
-          configure :session
-
           dependency :connect, Connect
           dependency :data_logger, Log::Data
           dependency :retry, Retry
@@ -17,6 +15,17 @@ module EventStore
 
       def self.build(settings=nil, namespace: nil, type: nil)
         Factory.(settings, namespace: namespace, type: type)
+      end
+
+      def self.configure(receiver, settings=nil, attr_name: nil, session: nil, **arguments)
+        attr_name ||= :session
+
+        if session.nil?
+          session = build settings, **arguments
+        end
+
+        receiver.public_send "#{attr_name}=", session
+        session
       end
 
       Virtual::Method.define self, :configure

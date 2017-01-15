@@ -3,7 +3,7 @@ require_relative '../../automated_init'
 context "Establishing Connection" do
   host = Controls::Hostname::Available.example
 
-  connect = EventStore::HTTP::Connect.build
+  connect = EventStore::HTTP::Connect::Any.build
   connection = connect.raw host
 
   test "Address of connection is set to host" do

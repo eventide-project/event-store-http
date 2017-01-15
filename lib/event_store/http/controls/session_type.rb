@@ -10,17 +10,6 @@ module EventStore
           EventStore::HTTP::Session::AnyMember
         end
       end
-
-      #XXX
-      module ConnectionType
-        def self.example
-          SessionType.example
-        end
-
-        def self.connect_class
-          EventStore::HTTP::Connect::Any
-        end
-      end
     end
   end
 end
