@@ -28,4 +28,8 @@ require 'event_store/http/endpoints/gossip/response'
 require 'event_store/http/endpoints/gossip/response/states'
 require 'event_store/http/endpoints/gossip/response/transformer'
 
+require 'event_store/http/retry'
+require 'event_store/http/retry/substitute'
+require 'event_store/http/retry/telemetry'
+
 require 'event_store/http/session'

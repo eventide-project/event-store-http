@@ -65,26 +65,6 @@ module EventStore
       def retry_duration_seconds
         Rational(retry_duration, 1000)
       end
-
-      TransmissionError = Class.new StandardError
-
-      module Defaults
-        def self.retry_duration
-          value = ENV['EVENT_STORE_HTTP_RETRY_DURATION']
-
-          return value.to_i if value
-
-          value
-        end
-
-        def self.retry_limit
-          value = ENV['EVENT_STORE_HTTP_RETRY_LIMIT']
-
-          return value.to_i if value
-
-          3
-        end
-      end
     end
   end
 end
