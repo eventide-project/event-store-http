@@ -8,7 +8,7 @@ module EventStore
           Session.build settings
         end
 
-        def self.configure(receiver, settings=nil, namespace: nil, attr_name: attr_name, session: nil)
+        def self.configure(receiver, settings=nil, namespace: nil, attr_name: nil, session: nil)
           attr_name ||= :session
 
           session ||= get settings, namespace: namespace

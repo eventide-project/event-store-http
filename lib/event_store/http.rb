@@ -41,4 +41,6 @@ require 'event_store/http/session/leader'
 require 'event_store/http/session/log_text'
 require 'event_store/http/session/read'
 
+require 'event_store/http/media_types/events'
+
 EventStore::HTTP::NetHTTP.activate

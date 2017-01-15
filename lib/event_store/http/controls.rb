@@ -27,3 +27,7 @@ require 'event_store/http/controls/session_type'
 
 require 'event_store/http/controls/endpoints/gossip/response'
 require 'event_store/http/controls/endpoints/gossip/response/member'
+
+require 'event_store/http/controls/event'
+
+require 'event_store/http/controls/media_types/events'
