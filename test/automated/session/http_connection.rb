@@ -1,6 +1,6 @@
 require_relative '../automated_init'
 
-context "Session Establishes Connection" do
+context "Session HTTP Connection" do
   session = EventStore::HTTP::Session.build
 
   context "Initial connection" do
