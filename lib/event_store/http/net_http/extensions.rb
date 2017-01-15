@@ -18,7 +18,10 @@ module EventStore
         module IPAddress
           def ip_address
             if @socket.instance_of? Net::BufferedIO
-              remote_address = @socket.io.remote_address
+              socket = @socket.io
+
+              remote_address = socket.remote_address
+
               remote_address.ip_address
             else
               nil

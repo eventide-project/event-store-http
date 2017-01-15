@@ -64,10 +64,10 @@ module EventStore
         @net_http ||= establish_connection
       end
 
-      def reconnect
+      def reconnect(ip_address=nil)
         net_http.finish if net_http.active?
 
-        establish_connection
+        establish_connection ip_address
       end
 
       def establish_connection(ip_address=nil)

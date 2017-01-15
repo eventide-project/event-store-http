@@ -18,6 +18,7 @@ require 'event_store/http/controls/port'
 require 'event_store/http/controls/net_http'
 require 'event_store/http/controls/net_http/host_header'
 require 'event_store/http/controls/net_http/request'
+require 'event_store/http/controls/net_http/request/post'
 
 require 'event_store/http/controls/cluster/size'
 require 'event_store/http/controls/cluster/current_members'
