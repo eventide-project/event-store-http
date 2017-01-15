@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Retry Limit Is Exceeded" do
-  error_cls = Class.new StandardError
+  error = Class.new StandardError
 
   retry_limit = 11
 
@@ -13,13 +13,13 @@ context "Retry Limit Is Exceeded" do
 
   blk = proc { |_, retries|
     invocations += 1
-    raise error_cls unless retries == retry_limit + 1
+    raise error unless retries == retry_limit + 1
     :some_value
   }
 
   test "Error is raised" do
     assert proc { _retry.(&blk) } do
-      raises_error? error_cls
+      raises_error? error
     end
   end
 

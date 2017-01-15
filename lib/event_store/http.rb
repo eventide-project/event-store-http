@@ -9,7 +9,9 @@ require 'transform'
 require 'event_store/http/log'
 require 'event_store/http/settings'
 
+require 'event_store/http/net_http'
 require 'event_store/http/net_http/extensions'
+require 'event_store/http/net_http/substitute'
 
 require 'event_store/http/connect'
 require 'event_store/http/connect/any'
@@ -33,3 +35,5 @@ require 'event_store/http/retry/substitute'
 require 'event_store/http/retry/telemetry'
 
 require 'event_store/http/session'
+
+EventStore::HTTP::NetHTTP.activate

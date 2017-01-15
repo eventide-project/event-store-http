@@ -14,33 +14,46 @@ context "Retry Substitute" do
   end
 
   context "Error is specified" do
-    error_cls = Class.new StandardError
-    error = error_cls.new
+    error = Class.new StandardError
 
-    substitute = SubstAttr::Substitute.build EventStore::HTTP::Retry
-    substitute.set_error error
+    context "Retry limit is not set" do
+      substitute = SubstAttr::Substitute.build EventStore::HTTP::Retry
+      substitute.set_error error
 
-    invocations = 0
+      invocations = 0
 
-    block = proc {
-      invocations += 1
-      :some_value
-    }
+      return_value = substitute.() do
+        invocations += 1
+        :some_value
+      end
 
-    test "Error is raised" do
-      assert proc { substitute.(&block) } do
-        raises_error? error_cls
+      test "Return value is that of block" do
+        assert return_value == :some_value
+      end
+
+      test "Block is retried once" do
+        assert invocations == 2
+      end
+
+      test "Telemetry is recorded" do
+        assert substitute.telemetry_sink do
+          recorded_retried? do |record|
+            record.data.error.instance_of? error
+          end
+        end
       end
     end
 
-    test "Block is retried once" do
-      assert invocations == 2
-    end
+    context "Retry limit is set to zero" do
+      substitute = SubstAttr::Substitute.build EventStore::HTTP::Retry
+      substitute.retry_limit = 0
+      substitute.set_error error
 
-    test "Telemetry is recorded" do
-      assert substitute.telemetry_sink do
-        recorded_retried? do |record|
-          record.data.error == error
+      blk = proc { }
+
+      test "Error is raised" do
+        assert proc { substitute.(&blk) } do
+          raises_error? error
         end
       end
     end

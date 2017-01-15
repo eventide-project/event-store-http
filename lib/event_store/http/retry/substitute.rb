@@ -25,7 +25,10 @@ module EventStore
             super do |_, retries|
               return_value = block.(self, retries)
 
-              raise error if error
+              if error = self.error
+                self.error = nil
+                raise error
+              end
 
               return_value
             end
