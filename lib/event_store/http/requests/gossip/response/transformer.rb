@@ -1,6 +1,6 @@
 module EventStore
   module HTTP
-    module Endpoints
+    module Requests
       module Gossip
         class Response
           module Transformer

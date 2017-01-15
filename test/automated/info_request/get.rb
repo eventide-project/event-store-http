@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Get Server Information From Info Endpoint" do
-  get = EventStore::HTTP::Endpoints::Info::Get.build
+  get = EventStore::HTTP::Requests::Info::Get.build
 
   response = get.()
 

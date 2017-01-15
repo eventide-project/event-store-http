@@ -1,11 +1,11 @@
 module EventStore
   module HTTP
-    module Endpoints
+    module Requests
       module Gossip
         class Get
           include Log::Dependency
 
-          configure :get_gossip_endpoint
+          configure :gossip_request
 
           dependency :connection, Net::HTTP
 

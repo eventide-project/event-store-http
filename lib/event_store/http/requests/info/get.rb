@@ -1,11 +1,11 @@
 module EventStore
   module HTTP
-    module Endpoints
+    module Requests
       module Info
         class Get
           include Log::Dependency
 
-          configure :get_info_endpoint
+          configure :info_request
 
           dependency :connection, Net::HTTP
 
@@ -29,7 +29,7 @@ module EventStore
 
             response = Transform::Read.(http_response.body, :json, Response)
 
-            logger.debug { "GET info done (#{response.digest})" }
+            logger.debug { "GET info endpoint done (#{response.digest})" }
 
             response
           end
