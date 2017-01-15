@@ -1,12 +1,12 @@
 require_relative '../automated_init'
 
 context "EventStore Response To Request Made By Session With Server Error (5xx)" do
-  connection = SubstAttr::Substitute.build Net::HTTP
-  connection.set_response 500
-  connection.set_response 200
+  net_http = SubstAttr::Substitute.build Net::HTTP
+  net_http.set_response 500
+  net_http.set_response 200
 
   session = EventStore::HTTP::Session.build
-  session.connection = connection
+  session.net_http = net_http
 
   _retry = SubstAttr::Substitute.(:retry, session)
 
@@ -14,8 +14,8 @@ context "EventStore Response To Request Made By Session With Server Error (5xx)"
 
   response = session.request request
 
-  test "New connection is not established" do
-    assert session.connection.equal?(connection)
+  test "Session does not reconnect" do
+    assert session.net_http.equal?(net_http)
   end
 
   test "Request is retried" do

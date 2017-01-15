@@ -9,7 +9,7 @@ context "TCP Error Occurs While Session Esablishes Connection" do
   session.establish_connection
 
   test "Connection is established" do
-    assert session.connection.instance_of?(Net::HTTP)
+    assert session.net_http.instance_of?(Net::HTTP)
   end
 
   test "Request is retried" do

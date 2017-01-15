@@ -8,7 +8,7 @@ module EventStore
       dependency :connect, Connect
       dependency :retry, Retry
 
-      attr_writer :connection
+      attr_writer :net_http
 
       def self.build(settings=nil, namespace: nil)
         settings ||= Settings.instance
@@ -23,9 +23,9 @@ module EventStore
       def request(request)
         self.retry.() do |_retry|
           begin
-            response = connection.request request
+            response = net_http.request request
           rescue SystemCallError => error
-            connection.finish
+            net_http.finish
 
             logger.warn "Connection error during request; reconnecting (ErrorClass: #{error.class}, ErrorMessage: #{error.message})"
             reconnect
@@ -42,19 +42,27 @@ module EventStore
         end
       end
 
-      def connection
-        @connection ||= establish_connection
+      def net_http
+        @net_http ||= establish_connection
+      end
+
+      def reconnect
+        net_http.finish
+        establish_connection
       end
 
       def establish_connection(ip_address=nil)
-        self.connection = self.retry.() do
+        logger.trace { "Establishing connection (IPAddress: #{ip_address || '(none)'})" }
+
+        net_http = self.retry.() do
           connect.(ip_address).tap &:start
         end
-      end
-      alias_method :reconnect, :establish_connection
 
-      def retry_duration_seconds
-        Rational(retry_duration, 1000)
+        self.net_http = net_http
+
+        logger.debug { "Connection established (IPAddress: #{ip_address || '(none)'}, Host: #{net_http.address}, Port: #{net_http.port})" }
+
+        net_http
       end
     end
   end

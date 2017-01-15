@@ -1,11 +1,11 @@
 require_relative '../automated_init'
 
 context "Connection Is Terminated During Request Made By Session" do
-  connection = SubstAttr::Substitute.build Net::HTTP
-  connection.set_error Errno::ECONNRESET
+  net_http = SubstAttr::Substitute.build Net::HTTP
+  net_http.set_error Errno::ECONNRESET
 
   session = EventStore::HTTP::Session.build
-  session.connection = connection
+  session.net_http = net_http
 
   _retry = SubstAttr::Substitute.(:retry, session)
 
@@ -13,8 +13,8 @@ context "Connection Is Terminated During Request Made By Session" do
 
   response = session.request request
 
-  test "New connection is established" do
-    refute session.connection.equal?(connection)
+  test "Session reconnects" do
+    refute session.net_http.equal?(net_http)
   end
 
   test "Request is retried" do

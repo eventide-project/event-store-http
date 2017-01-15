@@ -1,14 +1,14 @@
 require_relative '../automated_init'
 
 context "Session Settings" do
-  context "Host" do
+  context "Settings are specified" do
     host = Controls::Hostname::Other.example
     settings = Settings.build({ :host => host })
 
     session = EventStore::HTTP::Session.build settings
 
-    test "Connections are established with specified host" do
-      assert session.connection.address == host
+    test "Settings are used" do
+      assert session.net_http.address == host
     end
   end
 
@@ -23,7 +23,7 @@ context "Session Settings" do
     session = EventStore::HTTP::Session.build settings, namespace: :some_namespace
 
     test "Settings within namespace are used" do
-      assert session.connection.address == host
+      assert session.net_http.address == host
     end
   end
 end
