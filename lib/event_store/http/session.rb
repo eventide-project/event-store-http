@@ -65,7 +65,8 @@ module EventStore
       end
 
       def reconnect
-        net_http.finish
+        net_http.finish if net_http.active?
+
         establish_connection
       end
 
@@ -78,7 +79,7 @@ module EventStore
 
         self.net_http = net_http
 
-        logger.debug { "Connection established (IPAddress: #{ip_address || '(none)'}, Host: #{net_http.address}, Port: #{net_http.port})" }
+        logger.debug { "Connection established (IPAddress: #{net_http.ip_address}, Host: #{net_http.address}, Port: #{net_http.port})" }
 
         net_http
       end
