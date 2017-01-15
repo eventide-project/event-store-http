@@ -24,7 +24,7 @@ module EventStore
 
         instance = new
         ::Telemetry.configure instance
-        settings.set instance
+        settings.set instance, namespace
         instance
       end
 
