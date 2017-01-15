@@ -4,8 +4,8 @@ module EventStore
       class Leader
         include Session
 
-        def configure(settings, namespace)
-          Connect::Leader.configure self, settings, namespace: namespace
+        def configure
+          connect.extend Connect::Leader
         end
       end
     end

@@ -1,11 +1,15 @@
 module EventStore
   module HTTP
-    module Connect
-      class Leader
-        include Connect
+    class Connect
+      module Leader
+        def self.build(settings=nil, namespace: nil)
+          instance = Connect.build settings, namespace: namespace
+          instance.extend self
+          instance
+        end
 
-        def call
-          net_http = raw host
+        def connect
+          net_http = super
 
           member_info = Requests::Info::Get.(net_http)
 

@@ -4,7 +4,7 @@ context "Establishing Connection, Cluster" do
   context "EventStore cluster is fully available" do
     host = Controls::Hostname::Cluster::Available.example
 
-    connect = EventStore::HTTP::Connect::Any.build
+    connect = EventStore::HTTP::Connect.build
     connection = connect.raw host
 
     test "Address of connection is set to host" do
@@ -25,7 +25,7 @@ context "Establishing Connection, Cluster" do
   context "EventStore cluster is partilaly available" do
     host = Controls::Hostname::Cluster::PartiallyAvailable.example
 
-    connect = EventStore::HTTP::Connect::Any.build
+    connect = EventStore::HTTP::Connect.build
     connection = connect.raw host
 
     test "Address of connection is set to host" do
@@ -46,7 +46,7 @@ context "Establishing Connection, Cluster" do
   context "EventStore cluster is unavailable" do
     host = Controls::Hostname::Cluster::Unavailable.example
 
-    connect = EventStore::HTTP::Connect::Any.build
+    connect = EventStore::HTTP::Connect.build
     connection = connect.raw host
 
     test "Address of connection is set to host" do

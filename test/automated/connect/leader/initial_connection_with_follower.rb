@@ -4,7 +4,7 @@ context "Leader Connection Type" do
   context "Initial connection is with a follower" do
     host = Controls::Hostname::Cluster::Followers.example
 
-    connect = EventStore::HTTP::Connect::Leader.new
+    connect = EventStore::HTTP::Connect::Leader.build
     connect.host = host
 
     context "Connection is initialized" do

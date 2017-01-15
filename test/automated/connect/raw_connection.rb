@@ -3,7 +3,7 @@ require_relative '../automated_init'
 context "Connect Instantiates Raw Connection" do
   ip_address = Controls::IPAddress.example
 
-  connect = EventStore::HTTP::Connect::Any.build
+  connect = EventStore::HTTP::Connect.build
 
   connection = connect.raw ip_address
 

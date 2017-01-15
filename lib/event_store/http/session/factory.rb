@@ -37,8 +37,9 @@ module EventStore
 
           Retry.configure instance, settings, namespace: namespace
           Log::Data.configure instance, Session, attr_name: :data_logger
+          Connect.configure instance, settings, namespace: namespace
 
-          instance.configure settings, namespace
+          instance.configure
 
           logger.debug { "Session constructed (Type: #{type.inspect}, Class: #{instance.class})" }
 

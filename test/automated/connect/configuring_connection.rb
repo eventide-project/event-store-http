@@ -1,10 +1,10 @@
-require_relative '../../automated_init'
+require_relative '../automated_init'
 
-context "AnyMember Connect Configures Connection" do
+context "Connect Configures Connection" do
   context "Attribute name is not specified" do
     receiver = OpenStruct.new
 
-    connection = EventStore::HTTP::Connect::Any.configure_connection receiver
+    connection = EventStore::HTTP::Connect.configure_connection receiver
 
     test "Default attribute name is used" do
       assert receiver.connection == connection
@@ -18,7 +18,7 @@ context "AnyMember Connect Configures Connection" do
   context "Attribute name is specified" do
     receiver = OpenStruct.new
 
-    connection = EventStore::HTTP::Connect::Any.configure_connection receiver, attr_name: :some_attr
+    connection = EventStore::HTTP::Connect.configure_connection receiver, attr_name: :some_attr
 
     test "Default attribute name is used" do
       assert receiver.some_attr == connection
@@ -31,7 +31,7 @@ context "AnyMember Connect Configures Connection" do
     host = Controls::Hostname::Other.example
     settings = Settings.build({ :host => host })
 
-    connection = EventStore::HTTP::Connect::Any.configure_connection receiver, settings
+    connection = EventStore::HTTP::Connect.configure_connection receiver, settings
 
     test "Settings are applied to connection" do
       assert connection.address == host
@@ -48,7 +48,7 @@ context "AnyMember Connect Configures Connection" do
       }
     })
 
-    connection = EventStore::HTTP::Connect::Any.configure_connection receiver, settings, namespace: :some_namespace
+    connection = EventStore::HTTP::Connect.configure_connection receiver, settings, namespace: :some_namespace
 
     test "Settings namespace is applied to connection" do
       assert connection.address == host
@@ -60,7 +60,7 @@ context "AnyMember Connect Configures Connection" do
 
     connection = Controls::NetHTTP.example
 
-    EventStore::HTTP::Connect::Any.configure_connection receiver, connection: connection
+    EventStore::HTTP::Connect.configure_connection receiver, connection: connection
 
     test "Specified connection is set on receiver" do
       assert receiver.connection.equal?(connection)
