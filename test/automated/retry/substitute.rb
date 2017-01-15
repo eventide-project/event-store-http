@@ -59,14 +59,14 @@ context "Retry Substitute" do
     end
   end
 
-  context "Supplied block triggers next retry" do
+  context "Supplied block triggers retry" do
     invocations = 0
 
     substitute = SubstAttr::Substitute.build EventStore::HTTP::Retry
 
     return_value = substitute.() do |_retry, retries|
       invocations += 1
-      _retry.next if retries == 0
+      _retry.failed if retries == 0
       :some_value
     end
 
@@ -80,9 +80,7 @@ context "Retry Substitute" do
 
     test "Telemetry is recorded" do
       assert substitute.telemetry_sink do
-        recorded_retried? do |record|
-          record.data.error.instance_of? EventStore::HTTP::Retry::Trigger
-        end
+        recorded_retried?
       end
     end
   end

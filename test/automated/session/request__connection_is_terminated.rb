@@ -19,7 +19,9 @@ context "Connection Is Terminated During Request Made By Session" do
 
   test "Request is retried" do
     assert _retry.telemetry_sink do
-      recorded_retried?
+      recorded_retried? do |record|
+        record.data.error.instance_of? Errno::ECONNRESET
+      end
     end
   end
 

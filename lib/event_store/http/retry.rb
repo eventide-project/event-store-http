@@ -60,8 +60,10 @@ module EventStore
         retry
       end
 
-      def next
-        raise Trigger
+      def failed(error=nil)
+        error ||= Trigger.new
+
+        raise error
       end
 
       def record_retry(error, retries)

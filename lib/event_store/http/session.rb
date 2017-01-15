@@ -36,7 +36,7 @@ module EventStore
             logger.warn "Connection error during request; reconnecting (ErrorClass: #{error.class}, ErrorMessage: #{error.message})"
             reconnect
 
-            _retry.next error
+            _retry.failed error
           end
 
           logger.debug { "Received response (#{LogText.request request, response})" }
@@ -45,7 +45,7 @@ module EventStore
 
           if Net::HTTPServerError === response
             logger.warn { "Server error (#{LogText.request request, response})" }
-            _retry.next
+            _retry.failed
           end
 
           response
