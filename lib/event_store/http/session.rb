@@ -6,19 +6,9 @@ module EventStore
       configure :session
 
       dependency :connect, Connect
+      dependency :retry, Retry
 
       attr_writer :connection
-
-      setting :retry_limit
-      setting :retry_duration
-
-      def retry_duration
-        @retry_duration ||= Defaults.retry_duration
-      end
-
-      def retry_limit
-        @retry_limit ||= Defaults.retry_limit
-      end
 
       def self.build(settings=nil, namespace: nil)
         settings ||= Settings.instance
@@ -26,32 +16,30 @@ module EventStore
 
         instance = new
         Connect.configure instance, settings, namespace: namespace
-        settings.set instance, namespace
+        Retry.configure instance, settings, namespace: namespace
         instance
       end
 
       def request(request)
-        try { connection.request request }
-      end
+        self.retry.() do |_retry|
+          begin
+            response = connection.request request
+          rescue SystemCallError => error
+            connection.finish
 
-      def try(&block)
-        retries ||= 0
+            logger.warn "Connection error during request; reconnecting (ErrorClass: #{error.class}, ErrorMessage: #{error.message})"
+            reconnect
 
-        block.()
+            _retry.next error
+          end
 
-      rescue SystemCallError => error
-        message = "Transmission error (ErrorClass: #{error.class}, Message: #{error})"
+          if Net::HTTPServerError === response
+            logger.warn "Server responded with 5xx status code"
+            _retry.next
+          end
 
-        unless retries < retry_limit
-          logger.error { message }
-          raise TransmissionError, message
+          response
         end
-
-        logger.warn { message }
-        establish_connection
-        retries += 1
-
-        retry 
       end
 
       def connection
@@ -59,8 +47,11 @@ module EventStore
       end
 
       def establish_connection(ip_address=nil)
-        self.connection = connect.(ip_address)
+        self.connection = self.retry.() do
+          connect.(ip_address).tap &:start
+        end
       end
+      alias_method :reconnect, :establish_connection
 
       def retry_duration_seconds
         Rational(retry_duration, 1000)
