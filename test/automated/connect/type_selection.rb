@@ -10,7 +10,7 @@ context "Connection Type Is Selected" do
   end
 
   context "Any type" do
-    connect = EventStore::HTTP::Connect.build type: :any
+    connect = EventStore::HTTP::Connect.build type: :any_member
 
     test do
       assert connect.instance_of?(EventStore::HTTP::Connect::Any)

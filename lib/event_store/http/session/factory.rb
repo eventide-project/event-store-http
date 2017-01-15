@@ -1,6 +1,6 @@
 module EventStore
   module HTTP
-    module Connect
+    module Session
       class Factory
         include Log::Dependency
 
@@ -27,7 +27,7 @@ module EventStore
         end
 
         def call
-          logger.trace { "Constructing Connect (Type: #{type.inspect})" }
+          logger.trace { "Constructing Session (Type: #{type.inspect})" }
 
           cls = resolve_class
 
@@ -35,9 +35,13 @@ module EventStore
 
           settings.set instance, namespace
 
+          Connect.configure instance, settings, namespace: namespace
+          Retry.configure instance, settings, namespace: namespace
+          Log::Data.configure instance, Session, attr_name: :data_logger
+
           instance.configure
 
-          logger.debug { "Connect constructed (Type: #{type.inspect}, Class: #{instance.class})" }
+          logger.debug { "Session constructed (Type: #{type.inspect}, Class: #{instance.class})" }
 
           instance
         end
@@ -50,7 +54,7 @@ module EventStore
 
         def resolve_class
           self.class.types.fetch type do
-            error_message = "Unknown type (Type: #{type.inspect}, KnownTypes: #{self.class.types.keys.inspect})"
+            error_message = "Unknown session type (Type: #{type.inspect}, KnownTypes: #{self.class.types.keys.inspect})"
             logger.error { error_message }
             raise UnknownType, error_message
           end
@@ -58,7 +62,7 @@ module EventStore
 
         def self.types
           @types ||= {
-            :any_member => Any,
+            :any_member => AnyMember,
             :leader => Leader
           }
         end

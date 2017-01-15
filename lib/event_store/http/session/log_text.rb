@@ -1,6 +1,6 @@
 module EventStore
   module HTTP
-    class Session
+    module Session
       module LogText
         def self.request(request, response=nil)
           text = %[Action: #{request.method}, Path: #{request.path}, RequestLength: #{request.body&.bytesize.to_i}]

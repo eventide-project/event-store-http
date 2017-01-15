@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Session Settings" do
-  context "Settings are specified" do
+  context "Connection settings" do
     host = Controls::Hostname::Other.example
     settings = Settings.build({ :host => host })
 
@@ -9,6 +9,16 @@ context "Session Settings" do
 
     test "Settings are used" do
       assert session.net_http.address == host
+    end
+  end
+
+  context "Type" do
+    settings = Settings.build({ :type => Controls::SessionType.example })
+
+    session = EventStore::HTTP::Session.build settings
+
+    test "Implementation corresponding to specified type is selected" do
+      assert session.instance_of?(Controls::SessionType.session_class)
     end
   end
 

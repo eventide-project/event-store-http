@@ -1,26 +1,25 @@
 module EventStore
   module HTTP
-    class Session
-      include Log::Dependency
+    module Session
+      def self.included(cls)
+        cls.class_exec do
+          include Log::Dependency
 
-      configure :session
+          configure :session
 
-      dependency :connect, Connect
-      dependency :data_logger, Log::Data
-      dependency :retry, Retry
+          dependency :connect, Connect
+          dependency :data_logger, Log::Data
+          dependency :retry, Retry
 
-      attr_writer :net_http
-
-      def self.build(settings=nil, namespace: nil)
-        settings ||= Settings.instance
-        namespace ||= Array(namespace)
-
-        instance = new
-        Connect.configure instance, settings, namespace: namespace
-        Retry.configure instance, settings, namespace: namespace
-        Log::Data.configure instance, self, attr_name: :data_logger
-        instance
+          attr_writer :net_http
+        end
       end
+
+      def self.build(settings=nil, namespace: nil, type: nil)
+        Factory.(settings, namespace: namespace, type: type)
+      end
+
+      Virtual::Method.define self, :configure
 
       def request(request)
         logger.trace { "Issuing request (#{LogText.request request})" }

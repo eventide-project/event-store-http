@@ -35,6 +35,10 @@ require 'event_store/http/retry/substitute'
 require 'event_store/http/retry/telemetry'
 
 require 'event_store/http/session'
+require 'event_store/http/session/any_member'
+require 'event_store/http/session/defaults'
+require 'event_store/http/session/factory'
+require 'event_store/http/session/leader'
 require 'event_store/http/session/log_text'
 
 EventStore::HTTP::NetHTTP.activate

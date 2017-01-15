@@ -22,7 +22,7 @@ require 'event_store/http/controls/net_http/request'
 require 'event_store/http/controls/cluster/size'
 require 'event_store/http/controls/cluster/current_members'
 
-require 'event_store/http/controls/connection_type'
+require 'event_store/http/controls/session_type'
 
 require 'event_store/http/controls/endpoints/gossip/response'
 require 'event_store/http/controls/endpoints/gossip/response/member'
