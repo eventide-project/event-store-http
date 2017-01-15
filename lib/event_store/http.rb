@@ -8,6 +8,7 @@ require 'transform'
 
 require 'event_store/http/log'
 require 'event_store/http/settings'
+require 'event_store/http/settings/read'
 
 require 'event_store/http/net_http'
 require 'event_store/http/net_http/extensions'
@@ -38,5 +39,6 @@ require 'event_store/http/session/defaults'
 require 'event_store/http/session/factory'
 require 'event_store/http/session/leader'
 require 'event_store/http/session/log_text'
+require 'event_store/http/session/read'
 
 EventStore::HTTP::NetHTTP.activate

@@ -10,7 +10,7 @@ context "Session Configures Dependency" do
       assert receiver.session == session
     end
 
-    test "Connect instance is returned" do
+    test "Session instance is returned" do
       assert session.is_a?(EventStore::HTTP::Session)
     end
   end
@@ -22,18 +22,6 @@ context "Session Configures Dependency" do
 
     test "Default attribute name is used" do
       assert receiver.some_attr == session
-    end
-  end
-
-  context "Type is specified" do
-    receiver = OpenStruct.new
-
-    type = Controls::SessionType.example
-
-    session = EventStore::HTTP::Session.configure receiver, type: type
-
-    test "Specified type is used" do
-      assert session.instance_of?(Controls::SessionType.session_class)
     end
   end
 
