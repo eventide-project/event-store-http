@@ -83,6 +83,11 @@ module EventStore
 
         net_http
       end
+
+      def configure_request(request)
+        request.connection = self
+        request.retry = self.retry
+      end
     end
   end
 end

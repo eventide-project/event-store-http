@@ -8,15 +8,21 @@ module EventStore
       dependency :connection, Net::HTTP
       dependency :retry, Retry
 
-      def self.build(connection=nil)
+      def self.build(session: nil)
         instance = new
-        Connect.configure_connection instance, connection: connection
-        Retry.configure instance
+
+        if session.nil?
+          Connect.configure_connection instance
+          Retry.configure instance
+        else
+          session.configure_request instance
+        end
+
         instance
       end
 
-      def self.call(events, stream, expected_version: nil, connection: nil)
-        instance = build connection
+      def self.call(events, stream, expected_version: nil, session: nil)
+        instance = build session: session
         instance.(events, stream, expected_version: expected_version)
       end
 
