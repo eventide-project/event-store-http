@@ -2,7 +2,7 @@ require_relative '../../automated_init'
 
 context "Event Media Type Serialization" do
   context "Single event" do
-    data = Controls::MediaTypes::Events.data
+    data = Controls::MediaTypes::Events.example
 
     context "Raw data" do
       raw_data = Transform::Write.raw_data data
@@ -24,7 +24,7 @@ context "Event Media Type Serialization" do
   end
 
   context "Single event with metadata" do
-    data = Controls::MediaTypes::Events.data metadata: true
+    data = Controls::MediaTypes::Events.example metadata: true
 
     context "Raw data" do
       raw_data = Transform::Write.raw_data data
@@ -41,7 +41,7 @@ context "Event Media Type Serialization" do
   end
 
   context "Multiple events" do
-    data = Controls::MediaTypes::Events.data batch_size: 3
+    data = Controls::MediaTypes::Events.example batch_size: 3
 
     context "Raw data" do
       raw_data = Transform::Write.raw_data data

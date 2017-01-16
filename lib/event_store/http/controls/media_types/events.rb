@@ -3,14 +3,19 @@ module EventStore
     module Controls
       module MediaTypes
         module Events
-          def self.data(batch_size: nil, metadata: nil)
+          def self.example(batch_size: nil, metadata: nil, random: nil)
             batch_size ||= 1
             metadata = "some-metadata" if metadata == true
 
             data = EventStore::HTTP::MediaTypes::Events::Data.new
 
             (0...batch_size).each do |i|
-              event_id = UUID.example i.next
+              if random
+                event_id = Identifier::UUID::Random.get
+              else
+                event_id = UUID.example i.next
+              end
+
               type = Event::Type.example
               event_data = Event::Data.example i
 
