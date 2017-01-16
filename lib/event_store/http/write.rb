@@ -19,10 +19,7 @@ module EventStore
       def call(batch, stream, expected_version: nil)
         logger.trace { "Writing events (#{LogText.attributes batch, stream, expected_version})" }
 
-        request = Net::HTTP::Post.new stream_path(stream)
-        request['content-type'] = MediaTypes::Events.mime
-        request['es-expectedversion'] = expected_version.to_s if expected_version
-        request.body = Transform::Write.(batch, :json)
+        request = build_request batch, stream, expected_version: expected_version
 
         response = nil
         
@@ -53,7 +50,20 @@ module EventStore
         end
       end
 
-      def stream_path(stream)
+      def build_request(batch, stream, expected_version: nil)
+        path = self.class.stream_path stream
+
+        request = Net::HTTP::Post.new path
+
+        request['Content-Type'] = MediaTypes::Events.mime
+        request['ES-ExpectedVersion'] = expected_version.to_s if expected_version
+
+        request.body = Transform::Write.(batch, :json)
+
+        request
+      end
+
+      def self.stream_path(stream)
         "/streams/#{stream}"
       end
 

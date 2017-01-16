@@ -49,5 +49,6 @@ require 'event_store/http/media_types/events/serialization'
 
 require 'event_store/http/write'
 require 'event_store/http/write/log_text'
+require 'event_store/http/write/substitute'
 
 EventStore::HTTP::NetHTTP.activate
