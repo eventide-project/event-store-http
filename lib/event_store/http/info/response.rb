@@ -1,25 +1,23 @@
 module EventStore
   module HTTP
-    module Requests
-      module Info
-        class Response
-          include Schema::DataStructure
+    class Info
+      class Response
+        include Schema::DataStructure
 
-          attribute :event_store_version, String
-          attribute :state, String
-          attribute :projections_mode, String
+        attribute :event_store_version, String
+        attribute :state, String
+        attribute :projections_mode, String
 
-          def leader?
-            state == States.leader
-          end
+        def leader?
+          state == States.leader
+        end
 
-          def follower?
-            state == States.follower
-          end
+        def follower?
+          state == States.follower
+        end
 
-          def digest
-            "EventStoreVersion: #{event_store_version}, State: #{States.digest state}, ProjectionsMode: #{projections_mode}"
-          end
+        def digest
+          "EventStoreVersion: #{event_store_version}, State: #{States.digest state}, ProjectionsMode: #{projections_mode}"
         end
       end
     end

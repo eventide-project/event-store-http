@@ -1,10 +1,10 @@
 require_relative '../automated_init'
 
-context "Get Cluster Status From Gossip Endpoint" do
+context "Get Gossip Endpoint" do
   leader_ip_address, * = Controls::Cluster::CurrentMembers.get
 
   connection = Controls::NetHTTP.example host: leader_ip_address
-  get = EventStore::HTTP::Requests::Gossip::Get.build connection: connection
+  get = EventStore::HTTP::Gossip.build connection: connection
 
   response = get.()
 

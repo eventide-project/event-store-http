@@ -6,7 +6,7 @@ context "Gossip Endpoint Response Deserialization" do
   response = Transform::Read.(
     json_text,
     :json,
-    EventStore::HTTP::Requests::Gossip::Response
+    EventStore::HTTP::Gossip::Response
   )
 
   test "Server IP address" do
@@ -21,7 +21,7 @@ context "Gossip Endpoint Response Deserialization" do
     leader = response.leader
 
     test "Is member" do
-      assert leader.instance_of?(EventStore::HTTP::Requests::Gossip::Response::Member)
+      assert leader.instance_of?(EventStore::HTTP::Gossip::Response::Member)
     end
 
     test "Instance ID" do
@@ -115,7 +115,7 @@ context "Gossip Endpoint Response Deserialization" do
       follower_index = Controls::Endpoints::Gossip::Response::Member::Index.follower index
 
       test "Is member" do
-        assert follower.instance_of?(EventStore::HTTP::Requests::Gossip::Response::Member)
+        assert follower.instance_of?(EventStore::HTTP::Gossip::Response::Member)
       end
 
       test "Instance ID" do
