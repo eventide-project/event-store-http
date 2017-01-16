@@ -98,7 +98,7 @@ context "Net::HTTP Substitute, Sending Requests" do
       response = substitute.request request
 
       test "First response set is returned" do
-        assert response.code == '200'
+        assert Net::HTTPOK === response
       end
     end
 
@@ -106,7 +106,7 @@ context "Net::HTTP Substitute, Sending Requests" do
       response = substitute.request request
 
       test "Second response set is returned" do
-        assert response.code == '201'
+        assert Net::HTTPCreated === response
       end
     end
 
@@ -114,7 +114,7 @@ context "Net::HTTP Substitute, Sending Requests" do
       response = substitute.request request
 
       test "404 is returned" do
-        assert response.code == '404'
+        assert Net::HTTPNotFound === response
       end
 
       test "Reason phrase" do

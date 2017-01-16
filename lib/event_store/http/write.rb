@@ -6,10 +6,12 @@ module EventStore
       configure :write
 
       dependency :connection, Net::HTTP
+      dependency :retry, Retry
 
       def self.build(connection=nil)
         instance = new
         Connect.configure_connection instance, connection: connection
+        Retry.configure instance
         instance
       end
 
@@ -26,7 +28,16 @@ module EventStore
         request['es-expectedversion'] = expected_version.to_s if expected_version
         request.body = Transform::Write.(batch, :json)
 
-        response = connection.request request
+        response = nil
+        
+        self.retry.() do |_retry|
+          response = connection.request request
+
+          if write_timeout? response
+            logger.warn { "Write timeout (#{LogText.attributes batch, stream, expected_version, response: response})" }
+            _retry.failed
+          end
+        end
 
         case response
         when Net::HTTPCreated then
@@ -40,7 +51,9 @@ module EventStore
           raise ExpectedVersionError, error_message
 
         else
-          fail
+          error_message = "Request failed (#{LogText.attributes batch, stream, expected_version, response: response})"
+          logger.error { error_message }
+          raise Error, error_message
         end
       end
 
@@ -48,7 +61,12 @@ module EventStore
         Net::HTTPBadRequest === response && response.message == "Wrong expected EventNumber"
       end
 
-      ExpectedVersionError = Class.new StandardError
+      def write_timeout?(response)
+        Net::HTTPBadRequest === response && response.message == "Write timeout"
+      end
+
+      Error = Class.new StandardError
+      ExpectedVersionError = Class.new Error
     end
   end
 end

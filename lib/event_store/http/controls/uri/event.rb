@@ -10,7 +10,7 @@ module EventStore
             ip_address = IPAddress.example
             port = Port.example
 
-            "http://#{ip_address}:#{port}/streams/#{stream}/#{position}"
+            ::URI.parse "http://#{ip_address}:#{port}/streams/#{stream}/#{position}"
           end
         end
       end

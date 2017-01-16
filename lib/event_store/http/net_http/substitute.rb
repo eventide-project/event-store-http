@@ -52,13 +52,14 @@ module EventStore
           headers ||= {}
           body ||= ''
 
-          response_cls =
+          response_cls = Net::HTTPResponse::CODE_TO_OBJ.fetch status_code.to_s do
             case status_code
             when (200...300) then Net::HTTPSuccess
             when (300...400) then Net::HTTPRedirection
             when (400...500) then Net::HTTPClientError
             when (500...600) then Net::HTTPServerError
             end
+          end
 
           response = response_cls.new '1.1', status_code.to_s, reason_phrase
 

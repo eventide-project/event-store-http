@@ -9,7 +9,7 @@ context "WriteEvents Posts Event Batch" do
     location = EventStore::HTTP::Write.(batch, stream)
 
     test "Location of first event of batch is returned as URL" do
-      assert location = Controls::URI::Event.example(stream: stream)
+      assert location == Controls::URI::Event.example(stream: stream)
     end
   end
 
@@ -17,7 +17,7 @@ context "WriteEvents Posts Event Batch" do
     location = EventStore::HTTP::Write.(batch, stream)
 
     test "Location of first event of original batch is returned as URL" do
-      assert location = Controls::URI::Event.example(stream: stream)
+      assert location == Controls::URI::Event.example(stream: stream)
     end
   end
 
@@ -29,7 +29,7 @@ context "WriteEvents Posts Event Batch" do
     test "Location of first event of new batch is returned as URL" do
       position = batch.events.count
 
-      assert location = Controls::URI::Event.example(stream: stream, position: position)
+      assert location == Controls::URI::Event.example(stream: stream, position: position)
     end
   end
 end
