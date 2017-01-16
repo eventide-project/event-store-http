@@ -4,21 +4,9 @@ module EventStore
       module Gossip
         class Get
           include Log::Dependency
+          include Request
 
           configure :gossip_request
-
-          dependency :connection, Net::HTTP
-
-          def self.build(connection=nil)
-            instance = new
-            Connect.configure_connection instance, connection: connection
-            instance
-          end
-
-          def self.call(connection=nil)
-            instance = build connection
-            instance.()
-          end
 
           def call
             logger.trace { "GET gossip endpoint" }

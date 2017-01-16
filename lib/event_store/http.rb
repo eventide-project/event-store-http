@@ -18,6 +18,8 @@ require 'event_store/http/connect'
 require 'event_store/http/connect/defaults'
 require 'event_store/http/connect/leader'
 
+require 'event_store/http/request'
+
 # XXX - Requests namespace was a mistake
 require 'event_store/http/requests/info/get'
 require 'event_store/http/requests/info/response'

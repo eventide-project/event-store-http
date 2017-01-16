@@ -4,21 +4,9 @@ module EventStore
       module Info
         class Get
           include Log::Dependency
+          include Request
 
           configure :info_request
-
-          dependency :connection, Net::HTTP
-
-          def self.build(connection=nil)
-            instance = new
-            Connect.configure_connection instance, connection: connection
-            instance
-          end
-
-          def self.call(connection=nil)
-            instance = build connection
-            instance.()
-          end
 
           def call
             logger.trace { "GET info endpoint" }
