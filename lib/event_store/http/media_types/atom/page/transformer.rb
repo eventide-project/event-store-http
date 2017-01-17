@@ -18,7 +18,9 @@ module EventStore
               raw_data[:entries].each do |entry_data|
                 event = Event.new
 
-                SetAttributes.(event, entry_data, exclude: :links)
+                SetAttributes.(event, entry_data, exclude: [:links, :is_meta_data, :is_link_meta_data])
+                event.is_metadata = entry_data[:is_meta_data]
+                event.is_link_metadata = entry_data[:is_link_meta_data]
 
                 Links.set event.links, entry_data[:links]
 

@@ -39,6 +39,8 @@ require 'event_store/http/controls/media_types/atom/event/links'
 require 'event_store/http/controls/media_types/atom/page'
 require 'event_store/http/controls/media_types/atom/page/entries'
 require 'event_store/http/controls/media_types/atom/page/json'
+require 'event_store/http/controls/media_types/atom/page/json/backward'
+require 'event_store/http/controls/media_types/atom/page/json/embed_rich'
 require 'event_store/http/controls/media_types/atom/page/links'
 
 require 'event_store/http/controls/media_types/events'

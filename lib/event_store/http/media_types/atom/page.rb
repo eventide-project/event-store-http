@@ -8,6 +8,8 @@ module EventStore
           attribute :id, String
           attribute :updated, String
           attribute :stream_id, String
+          attribute :self_url, String
+          attribute :etag, String
           attribute :links, Hash, default: ->{ Hash.new }
           attribute :entries, Array, default: -> { Array.new }
         end

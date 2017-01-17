@@ -28,6 +28,14 @@ module EventStore
             def self.stream_id
               stream
             end
+
+            def self.self_url
+              Links.self
+            end
+
+            def self.etag
+              "0;111111111"
+            end
           end
         end
       end

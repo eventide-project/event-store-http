@@ -21,6 +21,46 @@ module EventStore
                 count - index - 1
               end
 
+              def self.event_id(index=nil)
+                position = self.position index
+
+                UUID.example position
+              end
+
+              def self.event_type
+                Event::Content.event_type
+              end
+
+              def self.event_number(index=nil)
+                position index
+              end
+
+              def self.stream_id
+                Page.stream_id
+              end
+
+              def self.is_json
+                true
+              end
+
+              def self.is_metadata
+                false
+              end
+
+              def self.is_link_metadata
+                false
+              end
+
+              def self.position_event_number(index=nil)
+                position = self.position index
+
+                position * 111
+              end
+
+              def self.position_stream_id
+                "readStream"
+              end
+
               def self.title(index=nil)
                 position = self.position index
 
