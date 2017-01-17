@@ -6,6 +6,8 @@ module EventStore
 
       configure :read_stream
 
+      attr_accessor :long_poll_duration
+
       def call(stream, position: nil, batch_size: nil, direction: nil)
         batch_size ||= Defaults.batch_size
         position ||= Defaults.position
@@ -23,6 +25,7 @@ module EventStore
 
         request = Net::HTTP::Get.new slice_path
         request['Accept'] = MediaTypes::Atom.mime
+        request['ES-LongPoll'] = long_poll_duration.to_s if long_poll_duration
 
         response = connection.request request
 
@@ -38,7 +41,9 @@ module EventStore
           raise StreamNotFoundError, error_message
 
         else
-          fail
+          error_message = "Client error (#{LogText.attributes stream, position, batch_size, direction, response: response})"
+          logger.error error_message
+          raise Error, error_message
         end
       end
 
@@ -47,13 +52,15 @@ module EventStore
       end
 
       def enable_long_poll
+        self.long_poll_duration = Defaults.long_poll_duration
       end
 
       def self.directions
         [:forward, :backward]
       end
 
-      StreamNotFoundError = Class.new StandardError
+      Error = Class.new StandardError
+      StreamNotFoundError = Class.new Error
 
       module Defaults
         def self.batch_size
@@ -66,6 +73,14 @@ module EventStore
 
         def self.direction
           :forward
+        end
+
+        def self.long_poll_duration
+          long_poll_duration = ENV['EVENT_STORE_HTTP_LONG_POLL_DURATION']
+
+          return long_poll_duration.to_i if long_poll_duration
+
+          2
         end
 
         def self.position

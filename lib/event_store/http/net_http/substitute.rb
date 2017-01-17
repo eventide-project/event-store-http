@@ -2,6 +2,8 @@ module EventStore
   module HTTP
     module NetHTTP
       class Substitute
+        initializer :telemetry_sink
+
         attr_writer :next_response
 
         attr_accessor :active
@@ -11,16 +13,29 @@ module EventStore
           @active.nil? ? false : @active
         end
 
+        dependency :telemetry, ::Telemetry
+
         def self.build
-          new
+          telemetry_sink = Telemetry::Sink.new
+
+          instance = new telemetry_sink
+
+          telemetry = ::Telemetry.configure instance
+          telemetry.register telemetry_sink
+
+          instance
         end
 
         def request(request, _=nil, &block)
+          telemetry.record :requested, Telemetry::Requested.new(request)
+
           raise error if error
 
           response = next_response
 
           self.next_response = nil
+
+          telemetry.record :responded, Telemetry::Responded.new(response, request)
 
           response
         end

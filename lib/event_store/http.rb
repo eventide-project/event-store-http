@@ -13,6 +13,7 @@ require 'event_store/http/settings/read'
 require 'event_store/http/net_http'
 require 'event_store/http/net_http/extensions'
 require 'event_store/http/net_http/substitute'
+require 'event_store/http/net_http/substitute/telemetry'
 
 require 'event_store/http/connect'
 require 'event_store/http/connect/defaults'
