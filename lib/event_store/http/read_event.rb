@@ -9,6 +9,8 @@ module EventStore
       def call(uri=nil, stream: nil, position: nil)
         uri ||= self.event_path stream, position
 
+        logger.trace { "Reading event (#{LogText.attributes uri})" }
+
         request = Net::HTTP::Get.new uri
         request['Accept'] = MediaTypes::Atom.mime
 
@@ -16,6 +18,8 @@ module EventStore
 
         case response
         when Net::HTTPOK
+          logger.info { "Read event done (#{LogText.attributes uri, response: response})" }
+
           Transform::Read.(response.body, :json, MediaTypes::Atom::Event)
 
         when Net::HTTPNotFound

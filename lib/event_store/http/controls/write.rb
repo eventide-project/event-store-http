@@ -2,13 +2,13 @@ module EventStore
   module HTTP
     module Controls
       module Write
-        def self.call(events: nil, stream: nil)
+        def self.call(events: nil, stream: nil, session: nil)
           stream ||= Stream.example
           events ||= 1
 
           batch = MediaTypes::Events.example batch_size: events, random: true
 
-          EventStore::HTTP::Write.(batch, stream)
+          EventStore::HTTP::Write.(batch, stream, session: session)
 
           return stream, batch
         end
