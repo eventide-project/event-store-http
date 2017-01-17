@@ -38,7 +38,6 @@ module EventStore
           Retry.configure instance, settings, namespace: namespace
           Log::Data.configure instance, Session, attr_name: :data_logger
           connect = Connect.configure instance, settings, namespace: namespace
-          p connect
 
           instance.configure
 

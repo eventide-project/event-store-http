@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'evt-transform'
 
   s.add_development_dependency 'test_bench'
+  s.add_development_dependency 'ruby-prof-flamegraph'
 end

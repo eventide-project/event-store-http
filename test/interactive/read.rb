@@ -3,7 +3,7 @@ require_relative './interactive_init'
 session = InteractiveTests::Session.get
 
 depth = InteractiveTests::Stream.depth
-batch_size = 20
+batch_size = InteractiveTests::Stream.batch_size
 batch_count = depth / batch_size
 
 stream = ENV['STREAM']

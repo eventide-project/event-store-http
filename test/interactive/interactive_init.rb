@@ -9,6 +9,10 @@ module InteractiveTests
 
       2000
     end
+
+    def self.batch_size
+      EventStore::HTTP::ReadStream::Defaults.batch_size
+    end
   end
 
   module Benchmark
@@ -52,6 +56,7 @@ module InteractiveTests
       settings.override({ :host => host })
 
       session = EventStore::HTTP::Session.build settings
+      session.establish_connection
       session
     end
 
