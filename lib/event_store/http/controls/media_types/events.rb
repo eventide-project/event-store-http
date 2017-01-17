@@ -19,26 +19,18 @@ module EventStore
               type = Event::Type.example
               event_data = Event::Data.example i
 
-              _metadata = Event::Metadata.example i if metadata
+              metadata = Event::Metadata.example i if metadata
 
-              data.add_event event_id, type, event_data, _metadata
+              event = EventStore::HTTP::MediaTypes::Events::Data::Event.new
+              event.id = event_id
+              event.type = type
+              event.data = event_data
+              event.metadata = metadata
+
+              data.events << event
             end
 
             data
-          end
-
-          module JSON
-            def self.text
-              <<~JSON.chomp
-              [
-                {
-                  "eventId": "#{UUID.example}",
-                  "eventType": "#{Event::Type.example}",
-                  "data": "#{Event::Data.example}"
-                }
-              ]
-              JSON
-            end
           end
         end
       end

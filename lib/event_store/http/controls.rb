@@ -42,5 +42,6 @@ require 'event_store/http/controls/media_types/atom/page/json'
 require 'event_store/http/controls/media_types/atom/page/links'
 
 require 'event_store/http/controls/media_types/events'
+require 'event_store/http/controls/media_types/events/json'
 
 require 'event_store/http/controls/write'

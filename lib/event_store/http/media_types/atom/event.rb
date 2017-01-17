@@ -17,8 +17,8 @@ module EventStore
             attribute :event_stream_id, String
             attribute :event_number, Integer
             attribute :event_type, String
-            attribute :data, String
-            attribute :metadata, String
+            attribute :data, Hash
+            attribute :metadata, Hash
           end
           attribute :content, Content
         end

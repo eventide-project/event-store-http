@@ -7,26 +7,13 @@ module EventStore
 
           attribute :events, Array, default: ->{ Array.new }
 
-          def add_event(id, type, data, metadata=nil)
-            event = Event.build(
-              :id => id,
-              :type => type,
-              :data => data,
-              :metadata => metadata
-            )
-
-            events << event
-
-            event
-          end
-
           class Event
             include Schema::DataStructure
 
             attribute :id, String
             attribute :type, String
-            attribute :data, String
-            attribute :metadata, String
+            attribute :data, Hash
+            attribute :metadata, Hash
           end
 
           module Transformer

@@ -7,12 +7,12 @@ module EventStore
             module JSON
               def self.example(metadata: nil)
                 if metadata == true
-                  metadata = Content.metadata
+                  metadata = Controls::Event::Metadata.text
                 elsif !metadata
-                  metadata = ""
+                  metadata = '""'
                 end
 
-                data = Content.data
+                data = Controls::Event::Data.text
 
                 <<~JSON
                 {
@@ -27,8 +27,8 @@ module EventStore
                     "eventStreamId": "testStream",
                     "eventNumber": 0,
                     "eventType": "SomeType",
-                    "data": "#{data}",
-                    "metadata": "#{metadata}"
+                    "data": #{data},
+                    "metadata": #{metadata}
                   },
                   "links": [
                     {

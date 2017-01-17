@@ -18,7 +18,11 @@ module EventStore
           def self.example(i=nil)
             i ||= 0
 
-            "some-event-#{i}"
+            { :some_attribute => "some-value-#{i}" }
+          end
+
+          def self.text(i=nil)
+            JSON.generate example(i)
           end
         end
 
@@ -26,7 +30,11 @@ module EventStore
           def self.example(i=nil)
             i ||= 0
 
-            "some-metadata-#{i}"
+            { :some_meta_attribute => "some-meta-value-#{i}" }
+          end
+
+          def self.text(i=nil)
+            JSON.generate example(i)
           end
         end
       end

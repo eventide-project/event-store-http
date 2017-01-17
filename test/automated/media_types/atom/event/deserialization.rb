@@ -36,8 +36,12 @@ context "Atom Media Type, Deserializing Event" do
       assert content.event_number == Controls::MediaTypes::Atom::Event::Content.event_number
     end
 
+    test "Event type" do
+      assert content.event_type == Controls::Event::Type.example
+    end
+
     test "Data" do
-      assert content.data == Controls::MediaTypes::Atom::Event::Content.data
+      assert content.data == Controls::Event::Data.example
     end
 
     test "Metadata is not set" do
