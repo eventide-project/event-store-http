@@ -64,5 +64,7 @@ require 'event_store/http/read_stream/log_text'
 require 'event_store/http/read_stream/substitute'
 
 require 'event_store/http/read_event'
+require 'event_store/http/read_event/log_text'
+require 'event_store/http/read_event/substitute'
 
 EventStore::HTTP::NetHTTP.activate

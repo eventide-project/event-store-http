@@ -10,6 +10,7 @@ module EventStore
               page.updated = updated
               page.stream_id = stream_id
               page.links = Links.example
+              page
             end
 
             def self.stream

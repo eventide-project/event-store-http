@@ -30,6 +30,10 @@ module EventStore
             def self.summary
               Content.event_type
             end
+
+            def self.updated
+              Controls::Time::Raw.example.iso8601 6
+            end
           end
         end
       end
