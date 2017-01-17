@@ -32,6 +32,8 @@ require 'event_store/http/controls/stream'
 require 'event_store/http/controls/uri/event'
 
 require 'event_store/http/controls/media_types/atom/page'
+require 'event_store/http/controls/media_types/atom/page/entries'
+require 'event_store/http/controls/media_types/atom/page/links'
 require 'event_store/http/controls/media_types/atom/page/json'
 require 'event_store/http/controls/media_types/events'
 
