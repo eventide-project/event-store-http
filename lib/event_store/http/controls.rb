@@ -30,10 +30,17 @@ require 'event_store/http/controls/uri/event'
 
 require 'event_store/http/controls/gossip/response'
 require 'event_store/http/controls/gossip/response/member'
+
+require 'event_store/http/controls/media_types/atom/event'
+require 'event_store/http/controls/media_types/atom/event/content'
+require 'event_store/http/controls/media_types/atom/event/json'
+require 'event_store/http/controls/media_types/atom/event/links'
+
 require 'event_store/http/controls/media_types/atom/page'
 require 'event_store/http/controls/media_types/atom/page/entries'
-require 'event_store/http/controls/media_types/atom/page/links'
 require 'event_store/http/controls/media_types/atom/page/json'
+require 'event_store/http/controls/media_types/atom/page/links'
+
 require 'event_store/http/controls/media_types/events'
 
 require 'event_store/http/controls/write'

@@ -44,8 +44,12 @@ require 'event_store/http/session/log_text'
 require 'event_store/http/session/read'
 
 require 'event_store/http/media_types/atom'
+require 'event_store/http/media_types/atom/event'
+require 'event_store/http/media_types/atom/event/transformer'
+require 'event_store/http/media_types/atom/links'
 require 'event_store/http/media_types/atom/page'
 require 'event_store/http/media_types/atom/page/transformer'
+
 require 'event_store/http/media_types/events'
 require 'event_store/http/media_types/events/data'
 require 'event_store/http/media_types/events/serialization'

@@ -16,29 +16,16 @@ module EventStore
               Links.set page.links, raw_data[:links]
 
               raw_data[:entries].each do |entry_data|
-                entry = Page::Entry.new
+                event = Event.new
 
-                SetAttributes.(entry, entry_data, exclude: :links)
+                SetAttributes.(event, entry_data, exclude: :links)
 
-                Links.set entry.links, entry_data[:links]
+                Links.set event.links, entry_data[:links]
 
-                page.entries << entry
+                page.entries << event
               end
 
               page
-            end
-
-            module Links
-              def self.set(target, links)
-                links.each do |hash|
-                  uri = hash.fetch :uri
-                  relation = hash.fetch :relation
-
-                  relation = Casing::Underscore.(relation)
-
-                  target[relation.to_sym] = uri
-                end
-              end
             end
 
             module JSON
