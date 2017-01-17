@@ -3,6 +3,16 @@ require_relative '../../automated_init'
 context "Net::HTTP Substitute, Sending Requests" do
   substitute = SubstAttr::Substitute.build Net::HTTP
 
+  context "Response is not set" do
+    request = Controls::NetHTTP::Request.example
+
+    response = substitute.request request
+
+    test "Not found client error (404) is returned" do
+      assert Net::HTTPNotFound === response
+    end
+  end
+
   %w(Get Post Put Delete).each do |action|
     context "#{action} request is made" do
       request_cls = Net::HTTP.const_get action
@@ -113,16 +123,8 @@ context "Net::HTTP Substitute, Sending Requests" do
     context "All responses have been returned" do
       response = substitute.request request
 
-      test "404 is returned" do
-        assert Net::HTTPNotFound === response
-      end
-
-      test "Reason phrase" do
-        assert response.message == 'None'
-      end
-
-      test "Body is empty" do
-        assert response.body == ''
+      test "Previous response is returned again" do
+        assert Net::HTTPCreated === response
       end
     end
   end

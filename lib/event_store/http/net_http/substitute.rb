@@ -4,8 +4,6 @@ module EventStore
       class Substitute
         initializer :telemetry_sink
 
-        attr_writer :next_response
-
         attr_accessor :active
         attr_accessor :error
 
@@ -33,8 +31,6 @@ module EventStore
 
           response = next_response
 
-          self.next_response = nil
-
           telemetry.record :responded, Telemetry::Responded.new(response, request)
 
           response
@@ -53,9 +49,13 @@ module EventStore
         end
 
         def next_response
-          next_response = responses.shift
-          next_response ||= build_response 404
-          next_response
+          return build_response 404 if responses.empty?
+
+          response = responses.shift
+
+          responses << response if responses.empty?
+
+          response
         end
 
         def responses
