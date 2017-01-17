@@ -11,6 +11,33 @@ module InteractiveTests
     end
   end
 
+  module Benchmark
+    def self.start(&block)
+      t0 = Clock.now
+
+      Signal.trap 'INT' do
+        exit 0
+      end
+
+      at_exit {
+        t1 = Clock.now
+
+        elapsed_time = t1 - t0
+        operations = block.()
+        throughput = Rational(operations, elapsed_time)
+
+        puts <<~TEXT % [operations, elapsed_time, throughput]
+
+        Performance summary
+        = = =
+
+        Operations: %i, ElapsedTime: %.3fs, Throughput: %.2f ops/sec
+
+        TEXT
+      }
+    end
+  end
+
   module Session
     def self.get(host: nil)
       if host.nil?

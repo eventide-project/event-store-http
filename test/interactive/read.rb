@@ -19,6 +19,10 @@ end
 read_stream = EventStore::HTTP::ReadStream.build session: session
 read_event = EventStore::HTTP::ReadEvent.build session: session
 
+events_read = 0
+
+InteractiveTests::Benchmark.start { events_read }
+
 loop do
   batch_count.times do |batch_index|
     batch_position = batch_index * batch_size
@@ -58,5 +62,7 @@ loop do
         exit 1
       end
     end
+
+    events_read += atom_page.entries.count
   end
 end
