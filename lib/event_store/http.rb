@@ -43,6 +43,9 @@ require 'event_store/http/session/leader'
 require 'event_store/http/session/log_text'
 require 'event_store/http/session/read'
 
+require 'event_store/http/media_types/atom'
+require 'event_store/http/media_types/atom/page'
+require 'event_store/http/media_types/atom/page/transformer'
 require 'event_store/http/media_types/events'
 require 'event_store/http/media_types/events/data'
 require 'event_store/http/media_types/events/serialization'
@@ -50,5 +53,8 @@ require 'event_store/http/media_types/events/serialization'
 require 'event_store/http/write'
 require 'event_store/http/write/log_text'
 require 'event_store/http/write/substitute'
+
+require 'event_store/http/read_stream'
+require 'event_store/http/read_stream/log_text'
 
 EventStore::HTTP::NetHTTP.activate
