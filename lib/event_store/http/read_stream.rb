@@ -7,6 +7,7 @@ module EventStore
       configure :read_stream
 
       attr_accessor :long_poll_duration
+      attr_accessor :embed
 
       def call(stream, position: nil, batch_size: nil, direction: nil)
         batch_size ||= Defaults.batch_size
@@ -48,11 +49,21 @@ module EventStore
       end
 
       def slice_path(stream, position, batch_size, direction)
-        "/streams/#{stream}/#{position}/#{direction}/#{batch_size}"
+        path = "/streams/#{stream}/#{position}/#{direction}/#{batch_size}"
+
+        if embed
+          path << "?embed=#{embed}"
+        end
+
+        path
       end
 
       def enable_long_poll
         self.long_poll_duration = Defaults.long_poll_duration
+      end
+
+      def enable_rich_embed
+        self.embed = :rich
       end
 
       def self.directions
@@ -61,32 +72,6 @@ module EventStore
 
       Error = Class.new StandardError
       StreamNotFoundError = Class.new Error
-
-      module Defaults
-        def self.batch_size
-          batch_size = ENV['EVENT_STORE_HTTP_READ_BATCH_SIZE']
-
-          return batch_size.to_i if batch_size
-
-          20
-        end
-
-        def self.direction
-          :forward
-        end
-
-        def self.long_poll_duration
-          long_poll_duration = ENV['EVENT_STORE_HTTP_LONG_POLL_DURATION']
-
-          return long_poll_duration.to_i if long_poll_duration
-
-          2
-        end
-
-        def self.position
-          0
-        end
-      end
     end
   end
 end

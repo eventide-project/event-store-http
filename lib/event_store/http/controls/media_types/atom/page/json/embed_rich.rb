@@ -17,8 +17,6 @@ module EventStore
                       "name": "EventStore"
                     },
                     "headOfStream": true,
-                    "selfUrl": "http://127.0.0.1:2113/streams/testStream",
-                    "etag": "0;111111111",
                     "links": [
                       {
                         "uri": "http://127.0.0.1:2113/streams/testStream",

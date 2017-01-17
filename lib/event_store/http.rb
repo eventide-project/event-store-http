@@ -60,6 +60,7 @@ require 'event_store/http/write/log_text'
 require 'event_store/http/write/substitute'
 
 require 'event_store/http/read_stream'
+require 'event_store/http/read_stream/defaults'
 require 'event_store/http/read_stream/log_text'
 require 'event_store/http/read_stream/substitute'
 

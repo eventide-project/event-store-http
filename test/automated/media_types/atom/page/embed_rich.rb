@@ -5,14 +5,6 @@ context "Atom Media Type, Deserializing Page With Rich Data Embedded" do
 
   atom_page = Transform::Read.(json_text, :json, EventStore::HTTP::MediaTypes::Atom::Page)
 
-  test "Self URL" do
-    assert atom_page.self_url == Controls::MediaTypes::Atom::Page.self_url
-  end
-
-  test "ETag" do
-    assert atom_page.etag == Controls::MediaTypes::Atom::Page.etag
-  end
-
   test "Number of entries" do
     assert atom_page.entries.count == Controls::MediaTypes::Atom::Page::Entries.count
   end

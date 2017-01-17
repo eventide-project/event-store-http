@@ -5,9 +5,13 @@ context "Read Stream" do
 
   read_stream = EventStore::HTTP::ReadStream.build
 
-  results = read_stream.(stream)
+  page = read_stream.(stream)
 
-  test "Events are returned" do
-    assert results.entries.count == 11
+  test "Page is returned" do
+    assert page.instance_of?(EventStore::HTTP::MediaTypes::Atom::Page)
+  end
+
+  test "Page includes events" do
+    assert page.entries.count == 11
   end
 end
