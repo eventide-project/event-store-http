@@ -8,8 +8,6 @@ module EventStore
               uri = hash.fetch :uri
               relation = hash.fetch :relation
 
-              relation = Casing::Underscore.(relation)
-
               target[relation.to_sym] = uri
             end
           end
