@@ -1,30 +1,29 @@
 module EventStore
   module HTTP
     module Controls
-      module Endpoints
-        module Gossip
-          module Response
-            def self.server_ip
-              IPAddress::Cluster.example
+      module Gossip
+        module Response
+          def self.server_ip
+            IPAddress::Cluster.example
+          end
+
+          def self.server_port
+            Port::Internal.example
+          end
+
+          module State
+            def self.leader
+              'Master'
             end
 
-            def self.server_port
-              Port::Internal.example
+            def self.follower
+              'Slave'
             end
+          end
 
-            module State
-              def self.leader
-                'Master'
-              end
-
-              def self.follower
-                'Slave'
-              end
-            end
-
-            module JSON
-              def self.text
-                <<-JSON
+          module JSON
+            def self.text
+              <<-JSON
 {
   "members": [
     {
@@ -100,8 +99,7 @@ module EventStore
   "serverIp": "127.0.111.1",
   "serverPort": 2112
 }
-                JSON
-              end
+              JSON
             end
           end
         end
