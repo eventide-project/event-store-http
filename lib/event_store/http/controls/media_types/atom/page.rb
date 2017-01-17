@@ -4,12 +4,24 @@ module EventStore
       module MediaTypes
         module Atom
           module Page
-            def self.example
+            def self.example(embed_rich: nil, backward: nil)
               page = EventStore::HTTP::MediaTypes::Atom::Page.new
               page.id = id
               page.updated = updated
               page.stream_id = stream_id
-              page.links = Links.example
+              page.links = Links.example backward: backward
+
+              if embed_rich
+                page.self_url = self_url
+                page.etag = etag
+              end
+
+              Entries.count.times do |index|
+                entry = Entries.example index, embed_rich: embed_rich
+
+                page.entries << entry
+              end
+
               page
             end
 

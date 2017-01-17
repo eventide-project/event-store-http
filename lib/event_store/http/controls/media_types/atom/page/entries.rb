@@ -5,10 +5,24 @@ module EventStore
         module Atom
           module Page
             module Entries
-              def self.example(index=nil)
-                position = position index
+              def self.example(index=nil, embed_rich: nil)
+                position = self.position index
 
-                Event.example index
+                entry = Event.example position, content: false
+
+                if embed_rich
+                  entry.event_id = event_id index
+                  entry.event_type = event_type
+                  entry.event_number = event_number index
+                  entry.stream_id = stream_id
+                  entry.is_json = is_json
+                  entry.is_metadata = is_metadata
+                  entry.is_link_metadata = is_link_metadata
+                  entry.position_event_number = position_event_number index
+                  entry.position_stream_id = position_stream_id
+                end
+
+                entry
               end
 
               def self.count

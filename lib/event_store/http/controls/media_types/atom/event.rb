@@ -4,13 +4,17 @@ module EventStore
       module MediaTypes
         module Atom
           module Event
-            def self.example(position=nil)
+            def self.example(position=nil, content: nil)
+              content = true if content.nil?
+
+              content = Content.example position if content == true
+
               event = EventStore::HTTP::MediaTypes::Atom::Event.new
               event.title = title position
               event.id = id position
               event.updated = updated
               event.summary = summary
-              event.content = Content.example position
+              event.content = content if content
               event.links = Links.example position
               event
             end

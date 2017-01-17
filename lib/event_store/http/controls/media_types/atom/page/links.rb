@@ -5,15 +5,27 @@ module EventStore
         module Atom
           module Page
             module Links
-              def self.example
-                {
+              def self.example(backward: nil)
+                hash = {
                   :self => self.self,
                   :first => first,
                   :last => last,
-                  :previous => previous,
-                  :next => self.next,
                   :metadata => metadata
                 }
+
+                if backward
+                  hash.merge!({
+                    :previous => Backward.previous,
+                    :next => Backward.next,
+                  })
+                else
+                  hash.merge!({
+                    :previous => self.previous,
+                    :next => self.next,
+                  })
+                end
+
+                hash
               end
 
               def self.self

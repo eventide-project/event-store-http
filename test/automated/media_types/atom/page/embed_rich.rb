@@ -17,6 +17,12 @@ context "Atom Media Type, Deserializing Page With Rich Data Embedded" do
     assert atom_page.entries.count == Controls::MediaTypes::Atom::Page::Entries.count
   end
 
+  test "Control" do
+    control_page = Controls::MediaTypes::Atom::Page.example embed_rich: true
+
+    assert atom_page == control_page
+  end
+
   atom_page.entries.each_with_index do |entry, position|
     context "Event @#{position}" do
       test "Event ID" do

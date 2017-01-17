@@ -33,11 +33,11 @@ module EventStore
                         "relation": "last"
                       },
                       {
-                        "uri": "http://127.0.0.1:2113/streams/testStream/30/backward/20",
+                        "uri": "http://127.0.0.1:2113/streams/testStream/49/backward/20",
                         "relation": "next"
                       },
                       {
-                        "uri": "http://127.0.0.1:2113/streams/testStream/51/forward/20",
+                        "uri": "http://127.0.0.1:2113/streams/testStream/70/forward/20",
                         "relation": "previous"
                       },
                       {
