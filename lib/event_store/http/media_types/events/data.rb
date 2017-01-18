@@ -18,7 +18,7 @@ module EventStore
 
           module Transformer
             def self.json
-              Serialization::JSON
+              JSON
             end
 
             def self.raw_data(instance)
@@ -30,6 +30,12 @@ module EventStore
                 }
                 hash[:metadata] = event.metadata if event.metadata
                 hash
+              end
+            end
+
+            module JSON
+              def self.write(raw_data)
+                EventStore::HTTP::JSON::Serialize.(raw_data)
               end
             end
           end

@@ -19,7 +19,7 @@ module EventStore
 
               json_text = response.body
 
-              gossip_status = JSON.parse json_text
+              gossip_status = ::JSON.parse json_text
 
               members = gossip_status['members']
 

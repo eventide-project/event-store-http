@@ -5,6 +5,7 @@ require 'tempfile'
 require 'clock/controls'
 require 'identifier/uuid/controls'
 
+require 'event_store/http/controls/json'
 require 'event_store/http/controls/time'
 require 'event_store/http/controls/uuid'
 

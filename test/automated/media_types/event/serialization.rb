@@ -17,9 +17,12 @@ context "Event Media Type Serialization" do
     end
 
     context "JSON text" do
+      control_text = Controls::MediaTypes::Events::JSON.text
+      control_text = JSON.generate JSON.parse(control_text)
+
       text = Transform::Write.(data, :json)
 
-      assert text == Controls::MediaTypes::Events::JSON.text
+      assert text == control_text
     end
   end
 

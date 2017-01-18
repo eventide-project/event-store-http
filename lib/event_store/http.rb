@@ -19,6 +19,9 @@ require 'event_store/http/connect'
 require 'event_store/http/connect/defaults'
 require 'event_store/http/connect/leader'
 
+require 'event_store/http/json/deserialize'
+require 'event_store/http/json/serialize'
+
 require 'event_store/http/request'
 
 require 'event_store/http/info'
@@ -53,7 +56,6 @@ require 'event_store/http/media_types/atom/page/transformer'
 
 require 'event_store/http/media_types/events'
 require 'event_store/http/media_types/events/data'
-require 'event_store/http/media_types/events/serialization'
 
 require 'event_store/http/write'
 require 'event_store/http/write/log_text'

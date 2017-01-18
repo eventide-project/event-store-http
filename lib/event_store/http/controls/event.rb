@@ -22,7 +22,7 @@ module EventStore
           end
 
           def self.text(i=nil)
-            JSON.generate example(i)
+            ::JSON.generate example(i)
           end
         end
 
@@ -34,7 +34,7 @@ module EventStore
           end
 
           def self.text(i=nil)
-            JSON.generate example(i)
+            ::JSON.generate example(i)
           end
         end
       end

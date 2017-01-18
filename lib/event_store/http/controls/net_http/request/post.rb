@@ -26,7 +26,7 @@ module EventStore
             end
 
             def self.text
-              JSON.generate data
+              ::JSON.generate data
             end
           end
         end
