@@ -34,6 +34,7 @@ require 'event_store/http/controls/gossip/response/member'
 
 require 'event_store/http/controls/read_event/output_schema'
 require 'event_store/http/controls/read_stream/output_schema'
+require 'event_store/http/controls/read_stream/output_schema/optimized'
 
 require 'event_store/http/controls/media_types/atom/event'
 require 'event_store/http/controls/media_types/atom/event/content'

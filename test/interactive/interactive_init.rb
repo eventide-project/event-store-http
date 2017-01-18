@@ -10,7 +10,12 @@ module InteractiveTests
 
         stream = Controls::Stream.example
 
-        Controls::Write.(events: batch_size, stream: stream, session: session)
+        Controls::Write.(
+          events: batch_size,
+          stream: stream,
+          session: session,
+          metadata: true
+        )
       end
 
       stream
