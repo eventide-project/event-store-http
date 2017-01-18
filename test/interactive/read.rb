@@ -35,7 +35,7 @@ loop do
 
     unless event_position == position
       warn <<~TEXT
-        Position mismatch at #{control_position} (#{event_uri})
+        Position mismatch at #{control_position}
 
           Expected: #{control_position}
           Actual:   #{event_position}
@@ -46,7 +46,7 @@ loop do
 
     unless event_data == control_data
       warn <<~TEXT
-        Data mismatch at position #{control_position} (#{event_uri})
+        Data mismatch at position #{control_position}
 
           Expected: #{control_data.inspect}
           Actual:   #{event_data.inspect}
