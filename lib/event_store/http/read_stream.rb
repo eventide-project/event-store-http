@@ -34,7 +34,7 @@ module EventStore
         when Net::HTTPSuccess
           logger.info { "Stream read (#{LogText.attributes stream, position, batch_size, direction, response: response})" }
 
-          Transform::Read.(response.body, :json, MediaTypes::Atom::Page)
+          Transform::Read.(response.body, :json, transformer)
 
         when Net::HTTPNotFound
           error_message = "Stream not found (#{LogText.attributes stream, position, batch_size, direction, response: response})"
@@ -56,6 +56,15 @@ module EventStore
         end
 
         path
+      end
+
+      def transformer
+        case embed
+        when :rich
+          MediaTypes::Atom::Page::Embed::Rich
+        else
+          MediaTypes::Atom::Page::Embed::None
+        end
       end
 
       def enable_long_poll

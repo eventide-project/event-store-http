@@ -3,7 +3,7 @@ require_relative '../../../automated_init'
 context "Atom Media Type, Deserializing Page With Rich Data Embedded" do
   json_text = Controls::MediaTypes::Atom::Page::JSON::EmbedRich.example
 
-  atom_page = Transform::Read.(json_text, :json, EventStore::HTTP::MediaTypes::Atom::Page)
+  atom_page = Transform::Read.(json_text, :json, EventStore::HTTP::MediaTypes::Atom::Page::Embed::Rich)
 
   test "Number of entries" do
     assert atom_page.entries.count == Controls::MediaTypes::Atom::Page::Entries.count

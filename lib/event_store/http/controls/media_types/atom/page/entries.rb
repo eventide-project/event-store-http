@@ -11,6 +11,8 @@ module EventStore
                 entry = Event.example position, content: false
 
                 if embed_rich
+                  entry.extend EventStore::HTTP::MediaTypes::Atom::Page::Embed::Rich::Event
+
                   content = EventStore::HTTP::MediaTypes::Atom::Event::Content.new
 
                   content.event_stream_id = stream_id
