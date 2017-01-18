@@ -9,11 +9,16 @@ module EventStore
       attr_accessor :long_poll_duration
       attr_accessor :embed
 
-      def call(stream, position: nil, batch_size: nil, direction: nil, transformer: nil)
+      attr_writer :transformer
+
+      def transformer
+        @transformer ||= default_transformer
+      end
+
+      def call(stream, position: nil, batch_size: nil, direction: nil)
         batch_size ||= Defaults.batch_size
         position ||= Defaults.position
         direction ||= Defaults.direction
-        transformer ||= default_transformer
 
         logger.trace { "Reading stream (#{LogText.attributes stream, position, batch_size, direction})" }
 

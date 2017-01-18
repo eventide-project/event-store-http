@@ -6,9 +6,14 @@ module EventStore
 
       configure :read_event
 
-      def call(uri=nil, stream: nil, position: nil, transformer: nil)
+      attr_writer :transformer
+
+      def transformer
+        @transformer ||= MediaTypes::Atom::Event
+      end
+
+      def call(uri=nil, stream: nil, position: nil)
         uri ||= self.event_path stream, position
-        transformer ||= MediaTypes::Atom::Event
 
         logger.trace { "Reading event (#{LogText.attributes uri})" }
 
