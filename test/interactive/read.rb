@@ -23,6 +23,8 @@ loop do
 
     event = read_event.(event_uri)
 
+    events_read += 1
+
     control_data = Controls::Event::Data.example position
 
     event_data = event.content.data
@@ -49,7 +51,5 @@ loop do
       TEXT
       exit 1
     end
-
-    events_read += 1
   end
 end
