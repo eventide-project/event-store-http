@@ -53,6 +53,7 @@ require 'event_store/http/media_types/atom/event/transformer'
 require 'event_store/http/media_types/atom/links'
 require 'event_store/http/media_types/atom/page/embed/none'
 require 'event_store/http/media_types/atom/page'
+require 'event_store/http/media_types/atom/page/embed/body/transformer'
 require 'event_store/http/media_types/atom/page/embed/rich/event'
 require 'event_store/http/media_types/atom/page/embed/rich/transformer'
 

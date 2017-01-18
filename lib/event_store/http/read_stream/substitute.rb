@@ -9,6 +9,7 @@ module EventStore
         class ReadStream
           initializer :telemetry_sink
 
+          attr_accessor :body_embed_enabled
           attr_accessor :long_poll_enabled
           attr_accessor :rich_embed_enabled
 
@@ -57,6 +58,10 @@ module EventStore
             self.rich_embed_enabled = true
           end
 
+          def embed_body
+            self.body_embed_enabled = true
+          end
+
           def set_response(stream, page, position: nil)
             streams[stream] = page
           end
@@ -67,6 +72,7 @@ module EventStore
 
           alias_method :long_poll_enabled?, :long_poll_enabled
           alias_method :rich_embed_enabled?, :rich_embed_enabled
+          alias_method :body_embed_enabled?, :body_embed_enabled
         end
 
         module Telemetry

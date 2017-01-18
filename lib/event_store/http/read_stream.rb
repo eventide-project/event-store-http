@@ -60,6 +60,8 @@ module EventStore
 
       def transformer
         case embed
+        when :body
+          MediaTypes::Atom::Page::Embed::Body
         when :rich
           MediaTypes::Atom::Page::Embed::Rich
         else
@@ -73,6 +75,10 @@ module EventStore
 
       def embed_rich
         self.embed = :rich
+      end
+
+      def embed_body
+        self.embed = :body
       end
 
       def self.directions

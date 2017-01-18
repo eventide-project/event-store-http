@@ -1,22 +1,32 @@
 require_relative '../../../automated_init'
 
-context "Atom Media Type, Deserializing Page With Rich Data Embedded" do
-  json_text = Controls::MediaTypes::Atom::Page::JSON::Embed::Rich.example
+context "Atom Media Type, Deserializing Page With Body Data Embedded" do
+  json_text = Controls::MediaTypes::Atom::Page::JSON::Embed::Body.example
 
-  atom_page = Transform::Read.(json_text, :json, EventStore::HTTP::MediaTypes::Atom::Page::Embed::Rich)
+  atom_page = Transform::Read.(json_text, :json, EventStore::HTTP::MediaTypes::Atom::Page::Embed::Body)
 
   test "Number of entries" do
     assert atom_page.entries.count == Controls::MediaTypes::Atom::Page::Entries.count
   end
 
   test "Control" do
-    control_page = Controls::MediaTypes::Atom::Page.example embed: :rich
+    control_page = Controls::MediaTypes::Atom::Page.example embed: :body
 
     assert atom_page == control_page
   end
 
   atom_page.entries.each_with_index do |entry, index|
-    context "Event @#{index}" do
+    position = Controls::MediaTypes::Atom::Page::Entries.position index
+
+    context "Event @#{position}" do
+      test "Data" do
+        assert entry.content.data == Controls::Event::Data.example(position)
+      end
+
+      test "Metadata" do
+        assert entry.content.metadata == Controls::Event::Metadata.example(position)
+      end
+
       test "Event ID" do
         assert entry.event_id == Controls::MediaTypes::Atom::Page::Entries.event_id(index)
       end

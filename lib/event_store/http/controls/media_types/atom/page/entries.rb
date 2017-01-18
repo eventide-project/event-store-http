@@ -5,12 +5,12 @@ module EventStore
         module Atom
           module Page
             module Entries
-              def self.example(index=nil, embed_rich: nil)
+              def self.example(index=nil, embed: nil)
                 position = self.position index
 
                 entry = Event.example position, content: false
 
-                if embed_rich
+                if embed
                   entry.extend EventStore::HTTP::MediaTypes::Atom::Page::Embed::Rich::Event
 
                   content = EventStore::HTTP::MediaTypes::Atom::Event::Content.new
@@ -27,6 +27,11 @@ module EventStore
                   entry.is_link_metadata = is_link_metadata
                   entry.position_event_number = position_event_number index
                   entry.position_stream_id = position_stream_id
+                end
+
+                if embed == :body
+                  entry.content.data = Controls::Event::Data.example position
+                  entry.content.metadata = Controls::Event::Metadata.example position
                 end
 
                 entry
