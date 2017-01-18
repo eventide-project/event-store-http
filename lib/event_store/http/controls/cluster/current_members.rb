@@ -4,12 +4,17 @@ module EventStore
       module Cluster
         module CurrentMembers
           def self.get
-            host = Hostname::Cluster.example
             port = Port.example
 
-            socket = TCPSocket.new host, port
-            ip_address = socket.remote_address.ip_address
-            socket.close
+            ip_address = IPAddress::Cluster.list.detect do |ip_address|
+              begin
+                socket = TCPSocket.new ip_address, port
+                socket.close
+                true
+              rescue SystemCallError
+                false
+              end
+            end
 
             leader_ip_address = nil
             follower_ip_addresses = []

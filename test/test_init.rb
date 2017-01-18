@@ -11,5 +11,3 @@ require 'test_bench'; TestBench.activate
 require 'pp'
 
 Controls = EventStore::HTTP::Controls
-
-Controls::Hostname::Resolution.activate
