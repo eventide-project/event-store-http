@@ -2,7 +2,7 @@ require_relative './profile_init'
 
 session = InteractiveTests::Session.get
 
-stream = Profile::ReadStream.get
+stream = Profile::ReadStream.get session
 
 read_event = EventStore::HTTP::ReadEvent.build session: session
 

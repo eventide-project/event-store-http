@@ -2,7 +2,7 @@ require_relative './interactive_init'
 
 session = InteractiveTests::Session.get
 
-stream = InteractiveTests::ReadStream.get
+stream = InteractiveTests::ReadStream.get session
 
 batch_size = InteractiveTests::Batch.size
 
