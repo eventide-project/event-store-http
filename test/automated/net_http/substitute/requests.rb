@@ -64,6 +64,19 @@ context "Net::HTTP Substitute, Sending Requests" do
     end
   end
 
+  context "Request headers is specified" do
+    substitute = SubstAttr::Substitute.build Net::HTTP
+    substitute.request_headers['Some-Header'] = 'some-value'
+
+    request = Controls::NetHTTP::Request.example
+
+    substitute.request request
+
+    test "Header is set on request object" do
+      assert request['Some-Header'] == 'some-value'
+    end
+  end
+
   context "Response includes headers" do
     substitute = SubstAttr::Substitute.build Net::HTTP
     substitute.set_response 200, headers: { 'Some-Header' => 'some-value' }

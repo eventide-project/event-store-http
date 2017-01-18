@@ -42,6 +42,8 @@ module EventStore
             logger.warn "Connection error during request; reconnecting (ErrorClass: #{error.class}, ErrorMessage: #{error.message})"
             reconnect
 
+            reset_request request
+
             _retry.failed error
           end
 
@@ -87,6 +89,11 @@ module EventStore
 
       def configure_retry(request)
         request.retry = self.retry
+      end
+
+      def reset_request(request)
+        request['host'] = nil
+        request['connection'] = nil
       end
     end
   end

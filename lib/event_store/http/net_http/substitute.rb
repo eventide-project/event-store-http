@@ -27,6 +27,10 @@ module EventStore
         def request(request, _=nil, &block)
           telemetry.record :requested, Telemetry::Requested.new(request)
 
+          request_headers.each do |name, value|
+            request[name] = value
+          end
+
           raise error if error
 
           response = next_response
@@ -88,6 +92,10 @@ module EventStore
           end
 
           response
+        end
+
+        def request_headers
+          @request_headers ||= {}
         end
 
         def start

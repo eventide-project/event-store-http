@@ -20,8 +20,7 @@ module EventStore
 
             net_http = reconnect leader_ip_address
 
-            request['host'] = nil
-            request['connection'] = nil
+            reset_request request
 
             response = request request
           end
