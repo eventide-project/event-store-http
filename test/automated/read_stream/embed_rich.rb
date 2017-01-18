@@ -16,15 +16,15 @@ context "Read Stream, Rich Embed" do
         end
 
         test "Event type" do
-          assert entry.event_type == Controls::Event::Type.example
+          assert entry.content.event_type == Controls::Event::Type.example
         end
 
         test "Event number" do
-          assert entry.event_number == Controls::MediaTypes::Atom::Page::Entries.event_number(index)
+          assert entry.content.event_number == Controls::MediaTypes::Atom::Page::Entries.event_number(index)
         end
 
-        test "Stream ID" do
-          assert entry.stream_id == stream
+        test "Event stream ID" do
+          assert entry.content.event_stream_id == stream
         end
 
         test "Position event number" do

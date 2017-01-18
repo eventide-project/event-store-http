@@ -11,10 +11,15 @@ module EventStore
                 entry = Event.example position, content: false
 
                 if embed_rich
+                  content = EventStore::HTTP::MediaTypes::Atom::Event::Content.new
+
+                  content.event_stream_id = stream_id
+                  content.event_number = event_number index
+                  content.event_type = event_type
+
+                  entry.content = content
+
                   entry.event_id = event_id index
-                  entry.event_type = event_type
-                  entry.event_number = event_number index
-                  entry.stream_id = stream_id
                   entry.is_json = is_json
                   entry.is_metadata = is_metadata
                   entry.is_link_metadata = is_link_metadata

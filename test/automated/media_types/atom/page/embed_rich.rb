@@ -22,15 +22,15 @@ context "Atom Media Type, Deserializing Page With Rich Data Embedded" do
       end
 
       test "Event type" do
-        assert entry.event_type == Controls::MediaTypes::Atom::Page::Entries.event_type
+        assert entry.content.event_type == Controls::MediaTypes::Atom::Page::Entries.event_type
       end
 
       test "Event number" do
-        assert entry.event_number == Controls::MediaTypes::Atom::Page::Entries.event_number(position)
+        assert entry.content.event_number == Controls::MediaTypes::Atom::Page::Entries.event_number(position)
       end
 
-      test "Stream ID" do
-        assert entry.stream_id == Controls::MediaTypes::Atom::Page::Entries.stream_id
+      test "Event stream ID" do
+        assert entry.content.event_stream_id == Controls::MediaTypes::Atom::Page::Entries.stream_id
       end
 
       test "Is JSON" do

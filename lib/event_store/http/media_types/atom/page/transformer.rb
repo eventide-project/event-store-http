@@ -19,6 +19,13 @@ module EventStore
                 event = Event.new
 
                 SetAttributes.(event, entry_data, exclude: [:links, :is_meta_data, :is_link_meta_data])
+
+                if [:event_number, :event_type, :stream_id].any? { |attribute| entry_data.key? attribute }
+                  content = Event::Content.new
+                  SetAttributes.(content, entry_data, copy: [:event_number, :event_type, { :stream_id => :event_stream_id }])
+                  event.content = content
+                end
+
                 event.is_metadata = entry_data[:is_meta_data]
                 event.is_link_metadata = entry_data[:is_link_meta_data]
 

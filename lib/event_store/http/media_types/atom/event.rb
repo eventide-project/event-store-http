@@ -12,9 +12,6 @@ module EventStore
           attribute :links, Hash, default: ->{ Hash.new }
 
           attribute :event_id, String
-          attribute :event_type, String
-          attribute :event_number, Integer
-          attribute :stream_id, String
 
           attribute :is_json
           alias_method :json?, :is_json
