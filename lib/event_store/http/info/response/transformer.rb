@@ -10,7 +10,7 @@ module EventStore
           def self.instance(raw_data)
             response = Response.new
             response.event_store_version = raw_data[:es_version]
-            response.state = raw_data[:state]
+            response.state = raw_data[:state].capitalize
             response.projections_mode = raw_data[:projections_mode]
             response
           end

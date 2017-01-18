@@ -9,11 +9,13 @@ module EventStore
       def call
         logger.trace { "GET gossip endpoint" }
 
-        http_response = connection.get uri_path
+        request = Net::HTTP::Get.new uri_path
+
+        http_response = connection.request request
 
         response = Transform::Read.(http_response.body, :json, Response)
 
-        logger.debug { "GET gossip endpoint done (LeaderIPAddress: #{response.leader.external_http_ip}, FollowerCount: #{response.followers.count})" }
+        logger.debug { "GET gossip endpoint done (LeaderIPAddress: #{response.leader&.external_http_ip.inspect}, FollowerCount: #{response.followers.count})" }
 
         return response
       end

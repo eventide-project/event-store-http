@@ -8,8 +8,8 @@ module EventStore
           instance
         end
 
-        def connect
-          net_http = super
+        def connect(net_http=nil)
+          net_http ||= super()
 
           member_info = Info.(connection: net_http)
 
@@ -17,10 +17,18 @@ module EventStore
 
           cluster_status = Gossip.(connection: net_http)
 
+          if cluster_status.leader.nil?
+            error_message = "Leader is unavailable (Host: #{host}, Port: #{port})"
+            logger.error { error_message }
+            raise LeaderUnavailableError, error_message
+          end
+
           leader_ip_address = cluster_status.leader.external_http_ip
 
           raw leader_ip_address
         end
+
+        LeaderUnavailableError = Class.new StandardError
       end
     end
   end

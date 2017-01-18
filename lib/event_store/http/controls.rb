@@ -29,7 +29,11 @@ require 'event_store/http/controls/session_type'
 require 'event_store/http/controls/stream'
 require 'event_store/http/controls/uri/event'
 
+require 'event_store/http/controls/info/response'
+require 'event_store/http/controls/info/response/json'
+
 require 'event_store/http/controls/gossip/response'
+require 'event_store/http/controls/gossip/response/json'
 require 'event_store/http/controls/gossip/response/member'
 
 require 'event_store/http/controls/read_event/output_schema'

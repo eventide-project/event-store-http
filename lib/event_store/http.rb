@@ -24,15 +24,15 @@ require 'event_store/http/json/serialize'
 
 require 'event_store/http/request'
 
+require 'event_store/http/cluster/member_state'
+
 require 'event_store/http/info'
 require 'event_store/http/info/response'
-require 'event_store/http/info/response/states'
 require 'event_store/http/info/response/transformer'
 
 require 'event_store/http/gossip'
 require 'event_store/http/gossip/response/member'
 require 'event_store/http/gossip/response'
-require 'event_store/http/gossip/response/states'
 require 'event_store/http/gossip/response/transformer'
 
 require 'event_store/http/retry'

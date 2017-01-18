@@ -93,6 +93,8 @@ module EventStore
 
             Leader = self
 
+            State = EventStore::HTTP::Cluster::MemberState
+
             module Index
               def self.leader
                 1

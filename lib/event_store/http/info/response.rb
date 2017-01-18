@@ -9,15 +9,15 @@ module EventStore
         attribute :projections_mode, String
 
         def leader?
-          state == States.leader
+          state == Cluster::MemberState.leader
         end
 
         def follower?
-          state == States.follower
+          state == Cluster::MemberState.follower
         end
 
         def digest
-          "EventStoreVersion: #{event_store_version}, State: #{States.digest state}, ProjectionsMode: #{projections_mode}"
+          "EventStoreVersion: #{event_store_version}, State: #{Cluster::MemberState.digest state}, ProjectionsMode: #{projections_mode}"
         end
       end
     end

@@ -8,12 +8,15 @@ module EventStore
         attribute :server_port, Integer
         attribute :leader, Member
         attribute :followers, Array, default: ->{ Array.new }
+        attribute :unknown, Array, default: ->{ Array.new }
 
         def add_member(member)
-          if member.state == States.leader
+          if member.state == Cluster::MemberState.leader
             self.leader = member
-          else
+          elsif member.state == Cluster::MemberState.follower
             followers << member
+          else
+            unknown << member
           end
         end
       end

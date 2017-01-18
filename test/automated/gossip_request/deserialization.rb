@@ -203,4 +203,10 @@ context "Gossip Endpoint Response Deserialization" do
       end
     end
   end
+
+  context "Unknown state members" do
+    test "Is empty" do
+      assert response.unknown == []
+    end
+  end
 end
