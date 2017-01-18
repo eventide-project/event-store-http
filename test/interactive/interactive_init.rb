@@ -1,17 +1,29 @@
 require_relative '../test_init'
 
 module InteractiveTests
-  module Stream
-    def self.depth
-      depth = ENV['STREAM_DEPTH']
+  module ReadStream
+    def self.get(session=nil)
+      stream = ENV['STREAM']
 
-      return depth.to_i if depth
+      if stream.nil?
+        batch_size = Batch.size
 
-      2000
+        stream = Controls::Stream.example
+
+        Controls::Write.(events: batch_size, stream: stream, session: session)
+      end
+
+      stream
     end
+  end
 
-    def self.batch_size
-      EventStore::HTTP::ReadStream::Defaults.batch_size
+  module Batch
+    def self.size
+      batch_size = ENV['BATCH_SIZE']
+
+      return batch_size.to_i if batch_size
+
+      20
     end
   end
 

@@ -29,16 +29,6 @@ module Profile
     printer.print $stdout, Hash.new
   end
 
-  module Batch
-    def self.size
-      batch_size = ENV['BATCH_SIZE']
-
-      return batch_size.to_i if batch_size
-
-      20
-    end
-  end
-
   module Iterations
     def self.get
       iterations = ENV['ITERATIONS']
@@ -59,19 +49,7 @@ module Profile
     end
   end
 
-  module ReadStream
-    def self.get(session=nil)
-      stream = ENV['STREAM']
+  Batch = InteractiveTests::Batch
 
-      if stream.nil?
-        batch_size = InteractiveTests::Stream.batch_size
-
-        stream = Controls::Stream.example
-
-        Controls::Write.(events: batch_size, stream: stream, session: session)
-      end
-
-      stream
-    end
-  end
+  ReadStream = InteractiveTests::ReadStream
 end
