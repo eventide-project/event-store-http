@@ -52,7 +52,15 @@ module EventStore
       end
 
       def build_request(uri)
-        request = Net::HTTP::Get.new uri
+        if uri.is_a? URI
+          path = uri.path
+        elsif uri.start_with? 'http'
+          path = URI.parse(uri).path
+        else
+          path = uri
+        end
+
+        request = Net::HTTP::Get.new path
         request['Accept'] = MediaTypes::Atom.mime
         request
       end

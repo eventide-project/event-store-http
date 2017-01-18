@@ -5,7 +5,7 @@ module EventStore
         module Atom
           module Event
             module JSON
-              def self.example(metadata: nil)
+              def self.text(metadata: nil)
                 if metadata == true
                   metadata = Controls::Event::Metadata.text
                 elsif !metadata

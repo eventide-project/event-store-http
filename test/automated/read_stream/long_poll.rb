@@ -6,7 +6,7 @@ context "Read Stream With Long Poll Enabled" do
   stream = Controls::Stream.example
 
   connection = SubstAttr::Substitute.(:connection, read_stream)
-  connection.set_response 200, body: Controls::MediaTypes::Atom::Page::JSON.example
+  connection.set_response 200, body: Controls::MediaTypes::Atom::Page::JSON.text
 
   read_stream.enable_long_poll
 

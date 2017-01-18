@@ -1,7 +1,7 @@
 require_relative '../../../automated_init'
 
 context "Atom Media Type, Deserializing Event" do
-  json_text = Controls::MediaTypes::Atom::Event::JSON.example
+  json_text = Controls::MediaTypes::Atom::Event::JSON.text
 
   atom_event = Transform::Read.(json_text, :json, EventStore::HTTP::MediaTypes::Atom::Event)
 

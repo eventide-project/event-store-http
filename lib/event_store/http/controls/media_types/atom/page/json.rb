@@ -5,7 +5,7 @@ module EventStore
         module Atom
           module Page
             module JSON
-              def self.example
+              def self.text
                 <<~JSON
                 {
                   "title": "Event stream 'testStream'",
