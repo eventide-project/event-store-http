@@ -8,11 +8,11 @@ module EventStore
 
       def call(uri=nil, stream: nil, position: nil)
         uri ||= self.event_path stream, position
+        uri = URI(uri)
 
         logger.trace { "Reading event (#{LogText.attributes uri})" }
 
-        request = Net::HTTP::Get.new uri
-        request['Accept'] = MediaTypes::Atom.mime
+        request = build_request uri
 
         response = connection.request request
 
@@ -42,6 +42,12 @@ module EventStore
         end
 
         "/streams/#{stream}/#{position}"
+      end
+
+      def build_request(uri)
+        request = Net::HTTP::Get.new uri.path
+        request['Accept'] = MediaTypes::Atom.mime
+        request
       end
 
       Error = Class.new StandardError
