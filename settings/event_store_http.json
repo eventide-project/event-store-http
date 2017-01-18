@@ -1,3 +1,5 @@
 {
-  "host": "eventstore.local"
+  "host": "eventstore.local",
+  "retryLimit": 50,
+  "retryDuration": 500
 }
