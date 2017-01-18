@@ -38,9 +38,7 @@ module EventStore
         self.retry.() do |_retry|
           begin
             response = net_http.request request
-          rescue SystemCallError => error
-            net_http.finish
-
+          rescue SystemCallError, IOError => error
             logger.warn "Connection error during request; reconnecting (ErrorClass: #{error.class}, ErrorMessage: #{error.message})"
             reconnect
 
