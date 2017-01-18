@@ -6,10 +6,10 @@ module EventStore
 
       configure :read_event
 
-      attr_writer :transformer
+      attr_writer :output_schema
 
-      def transformer
-        @transformer ||= MediaTypes::Atom::Event
+      def output_schema
+        @output_schema ||= MediaTypes::Atom::Event
       end
 
       def call(uri=nil, stream: nil, position: nil)
@@ -23,9 +23,9 @@ module EventStore
 
         case response
         when Net::HTTPOK
-          event = Transform::Read.(response.body, :json, transformer)
+          event = Transform::Read.(response.body, :json, output_schema)
 
-          logger.info { "Read event done (#{LogText.attributes uri, response: response}, Transformer: #{transformer})" }
+          logger.info { "Read event done (#{LogText.attributes uri, response: response}, OutputSchema: #{output_schema})" }
 
           event
 

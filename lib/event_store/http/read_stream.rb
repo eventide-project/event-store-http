@@ -9,10 +9,10 @@ module EventStore
       attr_accessor :long_poll_duration
       attr_accessor :embed
 
-      attr_writer :transformer
+      attr_writer :output_schema
 
-      def transformer
-        @transformer ||= default_transformer
+      def output_schema
+        @output_schema ||= default_output_schema
       end
 
       def call(stream, position: nil, batch_size: nil, direction: nil)
@@ -38,9 +38,9 @@ module EventStore
 
         case response
         when Net::HTTPSuccess
-          page = Transform::Read.(response.body, :json, transformer)
+          page = Transform::Read.(response.body, :json, output_schema)
 
-          logger.info { "Stream read (#{LogText.attributes stream, position, batch_size, direction, response: response}, Transformer: #{transformer})" }
+          logger.info { "Stream read (#{LogText.attributes stream, position, batch_size, direction, response: response}, OutputSchema: #{output_schema})" }
 
           page
 
@@ -66,7 +66,7 @@ module EventStore
         path
       end
 
-      def default_transformer
+      def default_output_schema
         case embed
         when :body
           MediaTypes::Atom::Page::Embed::Body
