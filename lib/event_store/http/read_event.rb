@@ -6,8 +6,9 @@ module EventStore
 
       configure :read_event
 
-      def call(uri=nil, stream: nil, position: nil)
+      def call(uri=nil, stream: nil, position: nil, transformer: nil)
         uri ||= self.event_path stream, position
+        transformer ||= MediaTypes::Atom::Event
 
         logger.trace { "Reading event (#{LogText.attributes uri})" }
 
@@ -17,9 +18,11 @@ module EventStore
 
         case response
         when Net::HTTPOK
-          logger.info { "Read event done (#{LogText.attributes uri, response: response})" }
+          event = Transform::Read.(response.body, :json, transformer)
 
-          Transform::Read.(response.body, :json, MediaTypes::Atom::Event)
+          logger.info { "Read event done (#{LogText.attributes uri, response: response}, Transformer: #{transformer})" }
+
+          event
 
         when Net::HTTPNotFound
           error_message = "Event not found (#{LogText.attributes uri, response: response})"

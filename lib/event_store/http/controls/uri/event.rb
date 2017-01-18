@@ -12,6 +12,11 @@ module EventStore
 
             ::URI.parse "http://#{ip_address}:#{port}/streams/#{stream}/#{position}"
           end
+
+          def self.raw(stream: nil, position: nil)
+            uri = example stream: stream, position: position
+            uri.to_s
+          end
         end
       end
     end

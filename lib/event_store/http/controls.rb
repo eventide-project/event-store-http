@@ -32,6 +32,9 @@ require 'event_store/http/controls/uri/event'
 require 'event_store/http/controls/gossip/response'
 require 'event_store/http/controls/gossip/response/member'
 
+require 'event_store/http/controls/read_event/transformer'
+require 'event_store/http/controls/read_stream/transformer'
+
 require 'event_store/http/controls/media_types/atom/event'
 require 'event_store/http/controls/media_types/atom/event/content'
 require 'event_store/http/controls/media_types/atom/event/json'

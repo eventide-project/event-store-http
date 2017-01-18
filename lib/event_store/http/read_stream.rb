@@ -9,10 +9,11 @@ module EventStore
       attr_accessor :long_poll_duration
       attr_accessor :embed
 
-      def call(stream, position: nil, batch_size: nil, direction: nil)
+      def call(stream, position: nil, batch_size: nil, direction: nil, transformer: nil)
         batch_size ||= Defaults.batch_size
         position ||= Defaults.position
         direction ||= Defaults.direction
+        transformer ||= default_transformer
 
         logger.trace { "Reading stream (#{LogText.attributes stream, position, batch_size, direction})" }
 
@@ -32,9 +33,11 @@ module EventStore
 
         case response
         when Net::HTTPSuccess
-          logger.info { "Stream read (#{LogText.attributes stream, position, batch_size, direction, response: response})" }
+          page = Transform::Read.(response.body, :json, transformer)
 
-          Transform::Read.(response.body, :json, transformer)
+          logger.info { "Stream read (#{LogText.attributes stream, position, batch_size, direction, response: response}, Transformer: #{transformer})" }
+
+          page
 
         when Net::HTTPNotFound
           error_message = "Stream not found (#{LogText.attributes stream, position, batch_size, direction, response: response})"
@@ -58,7 +61,7 @@ module EventStore
         path
       end
 
-      def transformer
+      def default_transformer
         case embed
         when :body
           MediaTypes::Atom::Page::Embed::Body
