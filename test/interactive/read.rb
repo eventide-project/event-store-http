@@ -8,6 +8,7 @@ batch_size = InteractiveTests::Batch.size
 
 read_stream = EventStore::HTTP::ReadStream.build session: session
 read_stream.embed_rich if ENV['EMBED'] == 'rich'
+read_stream.embed_body if ENV['EMBED'] == 'body'
 
 read_event = EventStore::HTTP::ReadEvent.build session: session
 
@@ -19,9 +20,11 @@ loop do
   atom_page = read_stream.(stream, batch_size: batch_size)
 
   atom_page.entries.reverse_each.with_index do |event, position|
-    event_uri = event.links.fetch :edit
+    unless ENV['EMBED'] == 'body'
+      event_uri = event.links.fetch :edit
 
-    event = read_event.(event_uri)
+      event = read_event.(event_uri)
+    end
 
     events_read += 1
 

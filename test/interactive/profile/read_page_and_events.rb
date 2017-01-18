@@ -5,7 +5,6 @@ session = InteractiveTests::Session.get
 stream = Profile::ReadStream.get
 
 read_stream = EventStore::HTTP::ReadStream.build session: session
-read_stream.embed_rich if ENV['EMBED'] == 'rich'
 
 read_event = EventStore::HTTP::ReadEvent.build session: session
 
