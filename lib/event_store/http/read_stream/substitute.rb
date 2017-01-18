@@ -53,7 +53,7 @@ module EventStore
             self.long_poll_enabled = true
           end
 
-          def enable_rich_embed
+          def embed_rich
             self.rich_embed_enabled = true
           end
 

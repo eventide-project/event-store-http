@@ -4,7 +4,7 @@ context "Read Stream, Rich Embed" do
   stream, _ = Controls::Write.(events: 11)
 
   read_stream = EventStore::HTTP::ReadStream.build
-  read_stream.enable_rich_embed
+  read_stream.embed_rich
 
   page = read_stream.(stream, batch_size: Controls::MediaTypes::Atom::Page::Entries.count)
 

@@ -9,7 +9,7 @@ context "Read Stream Substitute, Rich Embedding" do
     end
   end
 
-  substitute.enable_rich_embed
+  substitute.embed_rich
 
   context "Rich embedding has been enabled" do
     test "Predicate returns true" do

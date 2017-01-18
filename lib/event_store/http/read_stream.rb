@@ -71,7 +71,7 @@ module EventStore
         self.long_poll_duration = Defaults.long_poll_duration
       end
 
-      def enable_rich_embed
+      def embed_rich
         self.embed = :rich
       end
 
