@@ -32,7 +32,7 @@ module EventStore
 
       def request(request)
         logger.trace { "Issuing request (#{LogText.request request})" }
-        data_logger.trace { "Headers: #{LogText.header_data request}" }
+        data_logger.trace { "Request headers: #{LogText.header_data request}" }
         data_logger.trace { "Request data: #{LogText.body_data request}" }
 
         self.retry.() do |_retry|
@@ -48,8 +48,11 @@ module EventStore
           end
 
           logger.debug { "Received response (#{LogText.request request, response})" }
-          data_logger.trace { "Headers: #{LogText.header_data response}" }
-          data_logger.trace { "Response data: #{LogText.body_data response}" }
+
+          data_logger.debug { "Request location: #{request.path}" }
+          data_logger.debug { "Request headers: #{LogText.header_data request}" }
+          data_logger.debug { "Response headers: #{LogText.header_data response}" }
+          data_logger.debug { "Response data: #{LogText.body_data response}" }
 
           if Net::HTTPServerError === response
             logger.warn { "Server error (#{LogText.request request, response})" }
@@ -71,7 +74,7 @@ module EventStore
       end
 
       def establish_connection(ip_address=nil)
-        logger.trace { "Establishing connection (IPAddress: #{ip_address || '(none)'})" }
+        data_logger.trace { "Establishing connection (IPAddress: #{ip_address || '(none)'})" }
 
         net_http = self.retry.() do
           connect.(ip_address).tap &:start
@@ -79,7 +82,7 @@ module EventStore
 
         self.net_http = net_http
 
-        logger.debug { "Connection established (IPAddress: #{net_http.ip_address}, Host: #{net_http.address}, Port: #{net_http.port})" }
+        data_logger.debug { "Connection established (IPAddress: #{net_http.ip_address}, Host: #{net_http.address}, Port: #{net_http.port})" }
 
         net_http
       end

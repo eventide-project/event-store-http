@@ -58,7 +58,7 @@ module EventStore
         net_http.open_timeout = open_timeout unless open_timeout.nil?
         net_http.read_timeout = read_timeout unless read_timeout.nil?
 
-        logger.trace { "Net::HTTP connection built (IPAddress: #{ip_address}, Port: #{port})" }
+        logger.debug { "Net::HTTP connection built (IPAddress: #{ip_address}, Port: #{port})" }
 
         net_http.extend NetHTTP::Extensions
 
