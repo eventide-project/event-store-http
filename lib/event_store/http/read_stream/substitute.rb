@@ -10,7 +10,7 @@ module EventStore
           initializer :telemetry_sink
 
           attr_accessor :body_embed_enabled
-          attr_accessor :long_poll_enabled
+          attr_accessor :long_poll_duration
           attr_accessor :rich_embed_enabled
 
           dependency :telemetry, ::Telemetry
@@ -50,8 +50,17 @@ module EventStore
             end
           end
 
-          def enable_long_poll
-            self.long_poll_enabled = true
+          def enable_long_poll(duration=nil)
+            duration ||= HTTP::ReadStream::Defaults.long_poll_duration
+
+            self.long_poll_duration = duration
+          end
+
+          def long_poll_duration?(duration=nil)
+            return false if long_poll_duration.nil?
+            return true if duration.nil?
+
+            long_poll_duration == duration
           end
 
           def embed_rich
@@ -70,7 +79,6 @@ module EventStore
             @streams ||= {}
           end
 
-          alias_method :long_poll_enabled?, :long_poll_enabled
           alias_method :rich_embed_enabled?, :rich_embed_enabled
           alias_method :body_embed_enabled?, :body_embed_enabled
         end

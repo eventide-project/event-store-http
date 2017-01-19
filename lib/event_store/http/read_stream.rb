@@ -77,8 +77,10 @@ module EventStore
         end
       end
 
-      def enable_long_poll
-        self.long_poll_duration = Defaults.long_poll_duration
+      def enable_long_poll(duration=nil)
+        duration ||= Defaults.long_poll_duration
+
+        self.long_poll_duration = duration
       end
 
       def embed_rich
