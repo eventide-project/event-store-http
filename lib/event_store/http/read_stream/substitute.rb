@@ -56,7 +56,7 @@ module EventStore
             self.long_poll_duration = duration
           end
 
-          def long_poll_duration?(duration=nil)
+          def long_poll_enabled?(duration=nil)
             return false if long_poll_duration.nil?
             return true if duration.nil?
 
