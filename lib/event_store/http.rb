@@ -59,7 +59,7 @@ require 'event_store/http/media_types/atom/page/embed/rich/transformer'
 require 'event_store/http/media_types/atom/page/transformer'
 
 require 'event_store/http/media_types/events'
-require 'event_store/http/media_types/events/data'
+require 'event_store/http/media_types/events/batch'
 
 require 'event_store/http/write'
 require 'event_store/http/write/log_text'

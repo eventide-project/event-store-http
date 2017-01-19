@@ -2,10 +2,14 @@ module EventStore
   module HTTP
     module MediaTypes
       module Events
-        class Data
+        class Batch
           include Schema::DataStructure
 
           attribute :events, Array, default: ->{ Array.new }
+
+          def size
+            events.count
+          end
 
           class Event
             include Schema::DataStructure

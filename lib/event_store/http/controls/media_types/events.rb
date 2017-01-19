@@ -7,7 +7,7 @@ module EventStore
             batch_size ||= 1
             metadata = "some-metadata" if metadata == true
 
-            data = EventStore::HTTP::MediaTypes::Events::Data.new
+            batch = EventStore::HTTP::MediaTypes::Events::Batch.new
 
             (0...batch_size).each do |i|
               if random
@@ -21,16 +21,16 @@ module EventStore
 
               metadata = Event::Metadata.example i if metadata
 
-              event = EventStore::HTTP::MediaTypes::Events::Data::Event.new
+              event = EventStore::HTTP::MediaTypes::Events::Batch::Event.new
               event.id = event_id
               event.type = type
               event.data = event_data
               event.metadata = metadata
 
-              data.events << event
+              batch.events << event
             end
 
-            data
+            batch
           end
         end
       end

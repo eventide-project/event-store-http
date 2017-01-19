@@ -19,6 +19,10 @@ module EventStore
       def call(batch, stream, expected_version: nil)
         logger.trace { "Writing events (#{LogText.attributes batch, stream, expected_version})" }
 
+        if batch.is_a? Array
+          batch = MediaTypes::Events::Batch.build :events => batch
+        end
+
         request = build_request batch, stream, expected_version: expected_version
 
         response = nil

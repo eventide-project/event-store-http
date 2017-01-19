@@ -1,6 +1,6 @@
 require_relative '../automated_init'
 
-context "WriteEvents Posts Event Batch" do
+context "Write Posts Event Batch" do
   batch = Controls::MediaTypes::Events.example random: true
 
   stream = Controls::Stream.example

@@ -1,6 +1,6 @@
 require_relative '../../automated_init'
 
-context "WriteEvents Posts Event Batch With Expected Version" do
+context "Write Posts Event Batch With Expected Version" do
   batch = Controls::MediaTypes::Events.example random: true
 
   expected_version = 0
