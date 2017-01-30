@@ -49,7 +49,7 @@ module EventStore
 
           logger.debug { "Received response (#{LogText.request request, response})" }
 
-          data_logger.debug { "Request location: #{request.path}" }
+          data_logger.debug { "Request: #{request.method} #{request.path}" }
           data_logger.debug { "Request headers: #{LogText.header_data request}" }
           data_logger.debug { "Request data: #{LogText.body_data request}" }
           data_logger.debug { "Response headers: #{LogText.header_data response}" }
