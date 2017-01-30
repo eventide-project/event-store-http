@@ -51,6 +51,7 @@ module EventStore
 
           data_logger.debug { "Request location: #{request.path}" }
           data_logger.debug { "Request headers: #{LogText.header_data request}" }
+          data_logger.debug { "Request data: #{LogText.body_data request}" }
           data_logger.debug { "Response headers: #{LogText.header_data response}" }
           data_logger.debug { "Response data: #{LogText.body_data response}" }
 
