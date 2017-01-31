@@ -6,12 +6,19 @@ module EventStore
           net_http.instance_exec do
             extend DefaultHostHeader
             extend IPAddress
+            extend IO
           end
         end
 
         module DefaultHostHeader
           def addr_port
             "#{ip_address}:#{port}"
+          end
+        end
+
+        module IO
+          def io
+            @socket&.io
           end
         end
 
