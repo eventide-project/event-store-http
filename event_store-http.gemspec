@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-event_store-http'
-  s.version = '0.1.1.0'
+  s.version = '0.1.1.1'
   s.summary = "Client library for EventStore's HTTP interface"
   s.description = ' '
 
