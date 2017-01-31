@@ -28,6 +28,13 @@ module EventStore
         session
       end
 
+      def self.copy(session)
+        instance = session.class.new
+        instance.connect = session.connect
+        instance.retry = session.retry
+        instance
+      end
+
       Virtual::Method.define self, :configure
 
       def request(request)
