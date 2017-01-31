@@ -32,8 +32,17 @@ module EventStore
 
       def request(request)
         logger.trace { "Issuing request (#{LogText.request request})" }
-        data_logger.trace { "Request headers: #{LogText.header_data request}" }
-        data_logger.trace { "Request data: #{LogText.body_data request}" }
+
+        data_logger.trace {
+          <<~TEXT
+          Issuing request
+          
+          #{request.method} #{request.path}
+          #{LogText.header_data request}
+
+          #{LogText.body_data request}
+          TEXT
+        }
 
         self.retry.() do |_retry|
           begin
@@ -47,14 +56,21 @@ module EventStore
             _retry.failed error
           end
 
-          logger.debug { "Received response (#{LogText.request request, response})" }
+          logger.debug { "Request completed (#{LogText.request request, response})" }
 
-          data_logger.debug { "Request: #{request.method} #{request.path}" }
-          data_logger.debug { "Request headers: #{LogText.header_data request}" }
-          data_logger.debug { "Request data: #{LogText.body_data request}" }
-          data_logger.debug { "Response: #{response.code} #{response.message}" }
-          data_logger.debug { "Response headers: #{LogText.header_data response}" }
-          data_logger.debug { "Response data: #{LogText.body_data response}" }
+          data_logger.debug {
+            <<~TEXT
+            Request completed
+            
+            #{request.method} #{request.path}
+            #{LogText.header_data request}
+            #{LogText.body_data request}
+
+            HTTP/#{response.http_version} #{response.code} #{response.message}
+            #{LogText.header_data response}
+            #{LogText.body_data response}
+            TEXT
+          }
 
           if Net::HTTPServerError === response
             logger.warn { "Server error (#{LogText.request request, response})" }

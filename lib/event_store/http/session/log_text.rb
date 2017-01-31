@@ -15,24 +15,26 @@ module EventStore
         def self.header_data(message)
           text = String.new
 
+          if message['host']
+            text << "host: #{message['host']}\n"
+          end
+
           message.each_header do |name, value|
+            next if name == 'host'
+
             text << "#{name}: #{value}\n"
           end
 
-          if text.empty?
-            text << "(none)"
-          else
-            text.insert 0, "\n\n"
-          end
+          text << "(no headers)" if text.empty?
 
           text
         end
 
         def self.body_data(message)
           if message.body.to_s.empty?
-            '(none)'
+            '(no body)'
           else
-            "\n\n#{message.body}\n"
+            message.body
           end
         end
       end
