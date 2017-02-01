@@ -45,16 +45,14 @@ module EventStore
       end
 
       module Assertions
-        def session?(session, copy: nil)
+        def session?(session, strict: nil)
           return false unless connection.is_a? Session
           return false unless connection.connect == session.connect
 
-          instancy_equality = connection.equal? session
-
-          if copy
-            !instancy_equality
+          if strict
+            connection.equal? session
           else
-            instancy_equality
+            true
           end
         end
       end
