@@ -12,7 +12,9 @@ context "Get Info Endpoint" do
   end
 
   test "EventStore version is set" do
-    assert response.event_store_version.match? /\A[[:digit:]]\.[[:digit:]]\.[[:digit:]]\z/
+    version_pattern = %r{\A[[:digit:]]\.[[:digit:]]\.[[:digit:]](?:\.[[:digit:]])?\z}
+
+    assert response.event_store_version.match?(version_pattern)
   end
 
   test "Projections mode is set" do
